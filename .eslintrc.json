@@ -5,7 +5,9 @@
     },
     "extends": "airbnb",
     "globals": {
+        "afterEach": "readonly",
         "Atomics": "readonly",
+        "beforeEach": "readonly",
         "describe": "readonly",
         "expect": "readonly",
         "it": "readonly",

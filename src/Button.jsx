@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buttons } from './app.config'
+import { buttons } from './app.config';
 
 export default function Button(props) {
+  const { image } = props;
   const handleClick = () => {
     props.click();
   };
@@ -23,7 +24,7 @@ export default function Button(props) {
       onClick={handleClick}
       onKeyDown={event => handleInteraction(event)}
       role="button"
-      src={props.image}
+      src={image}
       style={{ height: buttons.size, width: buttons.size }}
       tabIndex="0"
     />
