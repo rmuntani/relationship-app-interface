@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { buttons } from './app.config'
 
 export default function Button(props) {
   const handleClick = () => {
@@ -18,10 +19,12 @@ export default function Button(props) {
   };
 
   return (
-    <div
+    <img
       onClick={handleClick}
-      onKeyPress={event => handleInteraction(event)}
+      onKeyDown={event => handleInteraction(event)}
       role="button"
+      src={props.image}
+      style={{ height: buttons.size, width: buttons.size }}
       tabIndex="0"
     />
   );
@@ -29,5 +32,11 @@ export default function Button(props) {
 
 Button.propTypes = {
   click: PropTypes.func.isRequired,
-  keysDown: PropTypes.arrayOf(PropTypes.string).isRequired,
+  image: PropTypes.object,
+  keysDown: PropTypes.arrayOf(PropTypes.number),
+};
+
+Button.defaultProps = {
+  image: null,
+  keysDown: [],
 };

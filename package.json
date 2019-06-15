@@ -8,6 +8,9 @@
       "!./src/index.js",
       "!./src/gantt.config.js"
     ],
+    "moduleNameMapper": {
+      "\\.(svg)$": "<rootDir>/tests/mocks/imgMock.js"
+    },
     "roots": [
       "./tests"
     ],
@@ -15,7 +18,8 @@
       "./tests/setup.js"
     ],
     "testPathIgnorePatterns": [
-      "./tests/setup.js"
+      "./tests/setup.js",
+      "./src/imgs"
     ],
     "verbose": true
   },
@@ -45,6 +49,7 @@
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
+    "file-loader": "^4.0.0",
     "jest": "^24.7.1",
     "react-test-renderer": "^16.8.6",
     "style-loader": "^0.23.1",

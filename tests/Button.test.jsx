@@ -20,7 +20,7 @@ describe('Button', () => {
       keysDown: buttons.left,
     };
     const button = mount(<Button {...properties} />);
-    button.childAt(0).simulate('keyPress', { key: 'ArrowLeft', keyCode: 37, which: 37 });
+    button.childAt(0).simulate('keyDown', { key: 'ArrowLeft', keyCode: 37, which: 37 });
 
     expect(properties.click).toHaveBeenCalledTimes(1);
   });

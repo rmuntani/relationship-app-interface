@@ -11,6 +11,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        resolve: { extensions: [".js", ".jsx"]},
         use: {
           loader: "babel-loader"
         }
@@ -18,6 +19,10 @@ module.exports = {
       {
         test: /\.css$/,
         use:['style-loader','css-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
       }
     ]
   }
