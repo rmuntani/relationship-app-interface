@@ -1,1 +1,1 @@
-docker run -it -v $(pwd):/react webpack sh
+docker run -it -v $(pwd):/react webpack bash
