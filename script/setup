@@ -1,2 +1,3 @@
 docker build -t webpack .
 docker run -v $(pwd):/react webpack npm install
+docker build -t sinatra server/

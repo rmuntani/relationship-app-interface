@@ -1,2 +1,2 @@
 sudo rm -rf node_modules
-docker rmi -f $(sudo docker images -q)
+docker rmi -f webpack sinatra
