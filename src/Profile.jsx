@@ -3,7 +3,7 @@ import ProfilePicture from './ProfilePicture';
 import ProfileDescription from './ProfileDescription';
 
 export default function Profile() {
-  const images = { images: ['placeholder'] };
+  const images = { images: [{ alt: 'placeholder', src: 'placeholder' }] };
 
   return (
     <React.Fragment>

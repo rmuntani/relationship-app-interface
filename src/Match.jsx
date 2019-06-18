@@ -10,12 +10,18 @@ export default function Match() {
   const like = () => {};
   const likeProperties = {
     click: like,
-    image: LikeImage,
+    image: {
+      alt: 'Like button',
+      src: LikeImage,
+    },
     keysDown: buttons.right,
   };
   const dislikeProperties = {
     click: dislike,
-    image: DislikeImage,
+    image: {
+      alt: 'Dislike button',
+      src: DislikeImage,
+    },
     keysDown: buttons.left,
   };
 

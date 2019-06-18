@@ -12,12 +12,22 @@ export default function ProfilePicture(props) {
   };
 
   return (
-    <img src={images[imageIndex]} onClick={() => updateIndex(imageIndex)} />
+    <button onClick={() => updateIndex(imageIndex)} type="button">
+      <img
+        alt={images[imageIndex].alt}
+        src={images[imageIndex].src}
+      />
+    </button>
   );
 }
 
 ProfilePicture.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object),
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      alt: PropTypes.string,
+      src: PropTypes.isRequired,
+    }) 
+  ),
 };
 
 ProfilePicture.defaultProps = {

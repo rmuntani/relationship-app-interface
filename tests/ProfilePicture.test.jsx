@@ -24,7 +24,7 @@ describe('ProfilePicture', () => {
   });
 
   it('should not change when there is only one image', () => {
-    const data = { images: ['test1'] };
+    const data = { images: [{ alt:'No image', src: 'test1' }] };
 
     act(() => {
       ReactDOM.render(<ProfilePicture {...data} />, container);
@@ -38,7 +38,10 @@ describe('ProfilePicture', () => {
   });
 
   it('should changes when clicked', () => {
-    const data = { images: ['test1', 'test2'] };
+    const data = { images: [
+      { alt:'No image', src: 'test1' },
+      { alt:'No image', src: 'test2' },
+    ] };
 
     act(() => {
       ReactDOM.render(<ProfilePicture {...data} />, container);
@@ -52,7 +55,13 @@ describe('ProfilePicture', () => {
   });
 
   it('should render all possible images, then return to the first', () => {
-    const imagesList = ['test1', 'test2', 'test3', 'test4', 'test5'];
+    const imagesList = [
+      { alt:'No image', src: 'test1' },
+      { alt:'No image', src: 'test2' },
+      { alt:'No image', src: 'test3' },
+      { alt:'No image', src: 'test4' },
+      { alt:'No image', src: 'test5' },
+    ];
     const data = { images: imagesList };
 
     act(() => {

@@ -20,24 +20,28 @@ export default function Button(props) {
   };
 
   return (
-    <img
+    <button
       onClick={handleClick}
       onKeyDown={event => handleInteraction(event)}
-      role="button"
-      src={image}
       style={{ height: buttons.size, width: buttons.size }}
       tabIndex="0"
-    />
+      type="button"
+    >
+      <img
+        alt={image.alt}
+        src={image.src}
+      />
+    </button>
   );
 }
 
 Button.propTypes = {
   click: PropTypes.func.isRequired,
-  image: PropTypes.object,
+  image: PropTypes.shape({ alt: PropTypes.string, src: PropTypes.isRequired }),
   keysDown: PropTypes.arrayOf(PropTypes.number),
 };
 
 Button.defaultProps = {
-  image: null,
+  image: { alt: 'No image found', src: null },
   keysDown: [],
 };
