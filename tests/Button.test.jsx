@@ -1,15 +1,17 @@
-import { mount } from 'enzyme';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import Button from '../src/Button';
 import { buttons } from '../src/app.config';
 
 describe('Button', () => {
+  afterEach(cleanup);
+
   it('should call the received function', () => {
-    const functionTest = {
-      click: jest.fn(),
-    };
-    const button = mount(<Button {...functionTest} />);
-    button.childAt(0).prop('onClick')();
+    const functionTest = { click: jest.fn() };
+    const { container } = render(<Button {...functionTest} />);
+    const button = container.querySelector('button');
+
+    fireEvent.click(button);
 
     expect(functionTest.click).toHaveBeenCalledTimes(1);
   });
@@ -19,8 +21,10 @@ describe('Button', () => {
       click: jest.fn(),
       keysDown: buttons.left,
     };
-    const button = mount(<Button {...properties} />);
-    button.childAt(0).simulate('keyDown', { key: 'ArrowLeft', keyCode: 37, which: 37 });
+    const { container } = render(<Button {...properties} />);
+    const button = container.querySelector('button');
+
+    fireEvent.keyDown(button, { key: 'ArrowLeft', keyCode: 37, which: 37 });
 
     expect(properties.click).toHaveBeenCalledTimes(1);
   });

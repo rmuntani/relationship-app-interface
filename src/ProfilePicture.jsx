@@ -26,7 +26,7 @@ ProfilePicture.propTypes = {
     PropTypes.shape({
       alt: PropTypes.string,
       src: PropTypes.isRequired,
-    }) 
+    }),
   ),
 };
 

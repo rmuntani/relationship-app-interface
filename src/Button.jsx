@@ -21,6 +21,7 @@ export default function Button(props) {
 
   return (
     <button
+      data-testid="button"
       onClick={handleClick}
       onKeyDown={event => handleInteraction(event)}
       style={{ height: buttons.size, width: buttons.size }}

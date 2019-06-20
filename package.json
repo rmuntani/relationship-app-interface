@@ -15,7 +15,6 @@
       "./tests"
     ],
     "setupFiles": [
-      "./tests/setup.js"
     ],
     "testPathIgnorePatterns": [
       "./tests/setup.js",
@@ -40,10 +39,9 @@
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
+    "@testing-library/react": "^8.0.1",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",
