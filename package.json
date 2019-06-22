@@ -1,12 +1,11 @@
 {
-  "name": "gantt",
+  "name": "relationship-app-interface",
   "version": "0.1.0",
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
       "./src/**",
-      "!./src/index.js",
-      "!./src/gantt.config.js"
+      "!./src/index.js"
     ],
     "moduleNameMapper": {
       "\\.(svg)$": "<rootDir>/tests/mocks/imgMock.js"
