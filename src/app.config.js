@@ -3,3 +3,7 @@ export const buttons = {
   right: [39, 68],
   size: '50px',
 };
+
+export const request = {
+  base: 'localhost:4567',
+};

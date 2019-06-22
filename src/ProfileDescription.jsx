@@ -1,7 +1,12 @@
 import React from 'react';
 
-export default function ProfileDescription() {
+export default function ProfileDescription(props) {
+  const { name, text } = props;
+  
   return (
-    <div />
+    <div>
+      <h1>{name}</h1>
+      <div>{text}</div>
+    </div>
   );
 }

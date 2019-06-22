@@ -10,7 +10,7 @@ export default function ProfilePicture(props) {
     if (images.length === newIndex) newIndex = 0;
     changeImage(newIndex);
   };
-
+  
   return (
     <button onClick={() => updateIndex(imageIndex)} type="button">
       <img
