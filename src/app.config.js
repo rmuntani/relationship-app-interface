@@ -7,7 +7,7 @@ export const buttons = {
 };
 
 export const request = {
-  base: 'localhost:4567',
-  dislike: 'localhost:4567/dislike',
-  like: 'localhost:4567/like',
+  base: 'http://localhost:4567/suggestions',
+  dislike: 'http://localhost:4567/dislike',
+  like: 'http://localhost:4567/like',
 };

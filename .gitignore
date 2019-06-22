@@ -1,4 +1,5 @@
 node_modules
 TODOS
 coverage
-dist
+server/public/*
+!server/public/index.html
