@@ -6,6 +6,7 @@ const neutralButton = {
 const baseLikeButton = {
   ...neutralButton,
   height: '50px',
+  padding: '0px',
   width: '50px',
 };
 

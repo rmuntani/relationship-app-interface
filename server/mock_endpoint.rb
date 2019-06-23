@@ -10,7 +10,7 @@ get '/suggestions' do
     [{
       id: 1,
       images: [{
-        src: 'ernesto.jpg',
+        src: 'pictures/ernesto.jpg',
         alt: 'Ernesto at the beach',
       }],
       description: {
@@ -21,7 +21,7 @@ get '/suggestions' do
     {
       id: 2,
       images: [{
-        src: 'bush.jpg',
+        src: 'pictures/bush.jpg',
         alt: 'George grilling some meat',
       }],
       description: {
@@ -32,7 +32,7 @@ get '/suggestions' do
     {
       id: 3,
       images: [{
-        src: 'descartes.jpg',
+        src: 'pictures/descartes.jpg',
         alt: 'Rene discarding some trash',
       }],
       description: {
