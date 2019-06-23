@@ -1,9 +1,51 @@
-export const buttons = {
-  dislikeText: 'Dislike button',
-  likeText: 'Like button',
-  left: [37, 65],
-  right: [39, 68],
-  size: '50px',
+const neutralButton = {
+  background: 'none',
+  border: 'none',
+};
+
+const baseLikeButton = {
+  ...neutralButton,
+  height: '50px',
+  width: '50px',
+};
+
+export const dislikeButton = {
+  keys: [37, 65],
+  style: {
+    ...baseLikeButton,
+  },
+  text: 'Dislike button',
+}
+
+export const likeButton = {
+  keys: [39, 68],
+  style: {
+    ...baseLikeButton,
+    float: 'right',
+  },
+  text: 'Like button',
+}
+
+export const match = {
+  style: {
+    border: 'solid 1px blue',
+    margin: 'auto',
+    height: '500px',
+    width: '500px'
+  },
+};
+
+export const profile = {
+  style: {
+    margin: 'auto',
+    textAlign: 'center',
+  }
+};
+
+export const profilePicture = {
+  style: {
+    ...neutralButton,
+  },
 };
 
 export const request = {

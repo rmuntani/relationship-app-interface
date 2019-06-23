@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { buttons } from './app.config';
 
 export default function Button(props) {
-  const { image } = props;
+  const { image, style } = props;
   const handleClick = () => {
     props.click();
   };
+
+  console.log(style);
 
   const handleInteraction = (event) => {
     const { keysDown } = props;
@@ -24,7 +25,7 @@ export default function Button(props) {
       data-testid="button"
       onClick={handleClick}
       onKeyDown={event => handleInteraction(event)}
-      style={{ height: buttons.size, width: buttons.size }}
+      style={{...style}}
       tabIndex="0"
       type="button"
     >

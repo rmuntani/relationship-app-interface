@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import Profile from './Profile';
-import { buttons, request } from './app.config';
+import { dislikeButton, likeButton, match, request } from './app.config';
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
 
@@ -28,36 +28,39 @@ export default function Match() {
   const likeProperties = {
     click: like,
     image: {
-      alt: buttons.likeText,
+      alt: likeButton.text,
       src: LikeImage,
     },
-    keysDown: buttons.right,
+    keysDown: likeButton.keys,
+    style: likeButton.style,
   };
+
   const dislikeProperties = {
     click: dislike,
     image: {
-      alt: buttons.dislikeText,
+      alt: dislikeButton.text,
       src: DislikeImage,
     },
-    keysDown: buttons.left,
+    keysDown: dislikeButton.keys,
+    style: dislikeButton.style,
   };
 
   useEffect(() => {
     if (changeBatch) {
       axios.get(request.base)
-      .then(
-        (response) => {
-          if (response.status === 200) {
-            changeUsers({ users: response.data, currentUser: 0 });
-            updateChangeBatch(false);
-          }
-        },
-      )
-      .catch(
-        (response) => {
-          updateChangeBatch(true);
-        },
-      )
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              changeUsers({ users: response.data, currentUser: 0 });
+              updateChangeBatch(false);
+            }
+          },
+        )
+        .catch(
+          () => {
+            updateChangeBatch(true);
+          },
+        );
     }
   }, []);
 
@@ -66,7 +69,7 @@ export default function Match() {
   }
 
   return (
-    <React.Fragment>
+    <div style={{...match.style}}>
       <Profile {
        ...{
          images: getUser(users.currentUser).images,
@@ -76,6 +79,6 @@ export default function Match() {
       />
       <Button {...dislikeProperties} />
       <Button {...likeProperties} />
-    </React.Fragment>
+    </div>
   );
 }

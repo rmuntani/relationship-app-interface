@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { profilePicture } from './app.config';
 
 export default function ProfilePicture(props) {
   const { images } = props;
@@ -12,7 +13,11 @@ export default function ProfilePicture(props) {
   };
 
   return (
-    <button onClick={() => updateIndex(imageIndex)} type="button">
+    <button
+      onClick={() => updateIndex(imageIndex)}
+      style={{...profilePicture.style}}
+      type="button"
+    >
       <img
         alt={images[imageIndex].alt}
         src={images[imageIndex].src}
