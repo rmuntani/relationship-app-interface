@@ -8,7 +8,7 @@ export default function Profile(props) {
   const { images, description } = props;
 
   return (
-    <div style={{...profile.style}}>
+    <div style={{ ...profile.style }}>
       <ProfilePicture {...{ images }} />
       <ProfileDescription {...description} />
     </div>

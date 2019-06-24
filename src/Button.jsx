@@ -29,14 +29,14 @@ export default function Button(props) {
     <ClickBox
       onClick={handleClick}
       onKeyDown={event => handleInteraction(event)}
-      style={{...style}}
+      style={{ ...style }}
       tabIndex="0"
       type="button"
     >
       <img
         alt={image.alt}
         src={image.src}
-        style={{...style}}
+        style={{ ...style }}
       />
     </ClickBox>
   );
@@ -46,9 +46,11 @@ Button.propTypes = {
   click: PropTypes.func.isRequired,
   image: PropTypes.shape({ alt: PropTypes.string, src: PropTypes.isRequired }),
   keysDown: PropTypes.arrayOf(PropTypes.number),
+  style: PropTypes.shape({}),
 };
 
 Button.defaultProps = {
   image: { alt: 'No image found', src: null },
   keysDown: [],
+  style: {},
 };

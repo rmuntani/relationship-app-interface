@@ -15,7 +15,7 @@ export default function ProfilePicture(props) {
   return (
     <button
       onClick={() => updateIndex(imageIndex)}
-      style={{...profilePicture.style}}
+      style={{ ...profilePicture.style }}
       type="button"
     >
       <img

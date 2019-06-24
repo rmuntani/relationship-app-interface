@@ -11,28 +11,28 @@ const baseLikeButton = {
 };
 
 export const dislikeButton = {
-  keys: [37, 65],
+  keys: [39, 68],
   style: {
     ...baseLikeButton,
   },
   text: 'Dislike button',
-}
+};
 
 export const likeButton = {
-  keys: [39, 68],
+  keys: [37, 65],
   style: {
     ...baseLikeButton,
     float: 'right',
   },
   text: 'Like button',
-}
+};
 
 export const match = {
   style: {
     border: 'solid 1px blue',
     margin: 'auto',
     height: '500px',
-    width: '500px'
+    width: '500px',
   },
 };
 
@@ -40,7 +40,7 @@ export const profile = {
   style: {
     margin: 'auto',
     textAlign: 'center',
-  }
+  },
 };
 
 export const profilePicture = {

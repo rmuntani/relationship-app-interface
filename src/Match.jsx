@@ -2,13 +2,17 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import Profile from './Profile';
-import { dislikeButton, likeButton, match, request } from './app.config';
+import {
+  dislikeButton, likeButton, match, request,
+} from './app.config';
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
+import MatchModal from './MatchModal';
 
 export default function Match() {
   const [changeBatch, updateChangeBatch] = useState(true);
   const [users, changeUsers] = useState({});
+  const [isMatch, setMatch] = useState({ success: false, user: {} });
 
   const getUser = index => users.users[index];
   const setNextUser = () => {
@@ -20,8 +24,16 @@ export default function Match() {
     axios.post(request.dislike, { id: getUser(users.currentUser).id });
     setNextUser();
   };
+
   const like = () => {
-    axios.post(request.like, { id: getUser(users.currentUser).id });
+    const currentUser = getUser(users.currentUser);
+    axios
+      .post(request.like, { id: getUser(users.currentUser).id })
+      .then((response) => {
+        if (response.data === 'Match') {
+          setMatch({ success: true, user: currentUser.user });
+        }
+      });
     setNextUser();
   };
 
@@ -68,8 +80,12 @@ export default function Match() {
     return (<div>Loading...</div>);
   }
 
+  if (isMatch.success) {
+    return (<MatchModal {...isMatch.user} />);
+  }
+
   return (
-    <div style={{...match.style}}>
+    <div style={{ ...match.style }}>
       <Profile {
        ...{
          images: getUser(users.currentUser).images,

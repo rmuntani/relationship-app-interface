@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import Button from '../src/Button';
-import { buttons } from '../src/app.config';
+import { likeButton } from '../src/app.config';
 
 describe('Button', () => {
   afterEach(cleanup);
@@ -19,7 +19,7 @@ describe('Button', () => {
   it('should support accessibility', () => {
     const properties = {
       click: jest.fn(),
-      keysDown: buttons.left,
+      keysDown: likeButton.keys,
     };
     const { container } = render(<Button {...properties} />);
     const button = container.querySelector('button');

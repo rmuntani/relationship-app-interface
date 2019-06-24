@@ -60,6 +60,8 @@ describe('Match', () => {
 
   it('should change users and make requests according to pressed buttons', (done) => {
     axios.get.mockResolvedValue({ data: usersData, status: 200 });
+    axios.post.mockResolvedValue({ data: '', status: 200 });
+
     const { container, getByText } = render(<Match />);
 
     setImmediate(() => {
@@ -83,8 +85,8 @@ describe('Match', () => {
 
   it('should send a request to the right url depending on what button was clicked', (done) => {
     axios.get.mockResolvedValue({ data: usersData, status: 200 });
+    axios.post.mockResolvedValue({ data: '', status: 200 });
     const { container } = render(<Match />);
-    axios.post = jest.fn();
 
     setImmediate(() => {
       const likeButton = container.querySelector('img[alt=\'Like button\']');
@@ -106,6 +108,21 @@ describe('Match', () => {
     setImmediate(() => {
       getByText('Loading...');
       done();
+    });
+  });
+
+  it('should alert when user has a new match', (done) => {
+    axios.get.mockResolvedValue({ data: usersData, status: 200 });
+    axios.post.mockResolvedValue({ data: 'Match', status: 200 });
+
+    const { container, findByText } = render(<Match />);
+
+    setImmediate(() => {
+      const likeButton = container.querySelector('img[alt=\'Like button\']');
+
+      fireEvent.click(likeButton);
+
+      findByText('It\'s a match!').then(() => done());
     });
   });
 });
