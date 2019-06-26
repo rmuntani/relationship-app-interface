@@ -9,9 +9,9 @@ const ClickBox = posed.button({
 });
 
 export default function Button(props) {
-  const { image, style } = props;
+  const { click, image, style } = props;
   const handleClick = () => {
-    props.click();
+    click();
   };
 
   const handleInteraction = (event) => {
@@ -21,7 +21,7 @@ export default function Button(props) {
     );
 
     if (hasKeyCode) {
-      props.click();
+      click();
     }
   };
 

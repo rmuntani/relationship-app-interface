@@ -7,7 +7,9 @@ describe('MatchModal', () => {
 
   const matchData = {
     name: 'Michael Jackson',
-    picture: 'michael.jpg',
+    image: {
+      src: 'michael.jpg',
+    },
     success: true,
   };
 
@@ -17,5 +19,6 @@ describe('MatchModal', () => {
 
     getByText('Michael Jackson');
     expect(image.src).toMatch(/michael.jpg/);
+    expect(image.alt).toMatch(/Michael Jackson/);
   });
 });

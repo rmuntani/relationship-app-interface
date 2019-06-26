@@ -6,7 +6,13 @@ set :public_folder, File.dirname(__FILE__) + '/public'
 
 post '/like' do
   content_type :json
-  'Match'
+  {
+    success: true,
+    user: {
+      name: 'Paulo Freire',
+      picture: 'pictures/paulo.jpg',
+    },
+  }.to_json
 end
 
 get '/suggestions' do

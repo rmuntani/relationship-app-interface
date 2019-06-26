@@ -1,1 +1,1 @@
-docker run -v $(pwd):/react webpack npm run test
+docker run -v $(pwd):/react webpack npm run test *

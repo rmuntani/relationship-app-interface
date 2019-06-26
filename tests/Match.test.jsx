@@ -111,18 +111,35 @@ describe('Match', () => {
     });
   });
 
-  it('should alert when user has a new match', (done) => {
+  it('should alert when user has a new match and vanish when clicked', (done) => {
     axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    axios.post.mockResolvedValue({ data: 'Match', status: 200 });
+    axios.post.mockResolvedValue({
+      data: {
+        success: true,
+        user: {
+          name: 'Paulo Freire',
+          image: {
+            src: 'paulo.jpg',
+          },
+        },
+      },
+      status: 200,
+    });
 
-    const { container, findByText } = render(<Match />);
+    const { container, findByText, getByText } = render(<Match />);
 
     setImmediate(() => {
       const likeButton = container.querySelector('img[alt=\'Like button\']');
 
       fireEvent.click(likeButton);
 
-      findByText('It\'s a match!').then(() => done());
+      findByText('It\'s a match!').then((node) => {
+        getByText('Paulo Freire');
+        fireEvent.click(node);
+        // After click the match screen, it should show the next user
+        getByText('George Bush');
+        done();
+      });
     });
   });
 });
