@@ -6,19 +6,19 @@ describe('MatchModal', () => {
   afterEach(cleanup);
 
   const matchData = {
-    name: 'Michael Jackson',
+    age: 75,
+    name: 'Paulo Freire',
     image: {
-      src: 'michael.jpg',
+      src: 'paulo.jpg',
     },
-    success: true,
   };
 
   it('should show user profile picture and name', () => {
     const { container, getByText } = render(<MatchModal {...matchData} />);
-    const image = container.querySelector('img[src=\'michael.jpg\']');
+    const image = container.querySelector('img[src=\'paulo.jpg\']');
 
-    getByText('Michael Jackson');
-    expect(image.src).toMatch(/michael.jpg/);
-    expect(image.alt).toMatch(/Michael Jackson/);
+    getByText('Paulo Freire');
+    expect(image.src).toMatch(/paulo.jpg/);
+    expect(image.alt).toMatch(/Paulo Freire/);
   });
 });

@@ -10,9 +10,6 @@ const ClickBox = posed.button({
 
 export default function Button(props) {
   const { click, image, style } = props;
-  const handleClick = () => {
-    click();
-  };
 
   const handleInteraction = (event) => {
     const { keysDown } = props;
@@ -27,7 +24,7 @@ export default function Button(props) {
 
   return (
     <ClickBox
-      onClick={handleClick}
+      onClick={() => click()}
       onKeyDown={event => handleInteraction(event)}
       style={{ ...style }}
       tabIndex="0"

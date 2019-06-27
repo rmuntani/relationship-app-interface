@@ -9,8 +9,12 @@ post '/like' do
   {
     success: true,
     user: {
+      age: 75,
       name: 'Paulo Freire',
-      picture: 'pictures/paulo.jpg',
+      image: {
+        alt: 'Paulo Freire',
+        src: 'pictures/paulo.jpg',
+      }
     },
   }.to_json
 end
@@ -25,6 +29,7 @@ get '/suggestions' do
         alt: 'Ernesto at the beach',
       }],
       description: {
+        age: 39,
         name: 'Ernesto Guevara',
         text: 'I\'m a warrior',
       }
@@ -36,6 +41,7 @@ get '/suggestions' do
         alt: 'George grilling some meat',
       }],
       description: {
+        age: 72,
         name: 'George Bush',
         text: 'Former US President',
       }
@@ -47,6 +53,7 @@ get '/suggestions' do
         alt: 'Rene discarding some trash',
       }],
       description: {
+        age: 53,
         name: 'Rene Descartes',
         text: 'C\'est moi',
       }

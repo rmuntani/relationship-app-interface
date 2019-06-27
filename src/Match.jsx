@@ -101,11 +101,7 @@ export default function Match() {
 
   const matchRoot = component => <div style={{ ...match.style }}>{component}</div>;
 
-  if (changeBatch) {
-    return (matchRoot(<div>Loading...</div>));
-  }
-
-  const matchModal = () => isMatch.success && ([
+  const matchModal = () => ([
     <Modal key="modal" style={{ ...modal.style }}>
       <MatchModal {...{ ...isMatch.user, click: removeMatch }} />
     </Modal>,
@@ -113,11 +109,15 @@ export default function Match() {
   ]
   );
 
+  if (changeBatch) {
+    return (matchRoot(<div>Loading...</div>));
+  }
+
   return (
     matchRoot(
       <React.Fragment>
         <PoseGroup>
-          {matchModal()}
+          {isMatch.success && matchModal()}
         </PoseGroup>
         <Profile {
         ...{

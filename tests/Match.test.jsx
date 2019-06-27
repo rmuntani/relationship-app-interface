@@ -17,6 +17,7 @@ describe('Match', () => {
         alt: 'Ernesto at the beach',
       }],
       description: {
+        age: 39,
         name: 'Ernesto Guevara',
         text: 'I\'m a warrior',
       },
@@ -28,6 +29,7 @@ describe('Match', () => {
         alt: 'George grilling some meat',
       }],
       description: {
+        age: 72,
         name: 'George Bush',
         text: 'Former US President',
       },
@@ -39,6 +41,7 @@ describe('Match', () => {
         alt: 'Rene discarding some trash',
       }],
       description: {
+        age: 53,
         name: 'Rene Descartes',
         text: 'C\'est moi',
       },
@@ -54,6 +57,7 @@ describe('Match', () => {
       expect(image.alt).toEqual('Ernesto at the beach');
       getByText('Ernesto Guevara');
       getByText('I\'m a warrior');
+      getByText('39');
       done();
     });
   });
@@ -71,6 +75,7 @@ describe('Match', () => {
       expect(ernestoImage.alt).toEqual('Ernesto at the beach');
       getByText('Ernesto Guevara');
       getByText('I\'m a warrior');
+      getByText('39');
 
       fireEvent.click(likeButton);
 
@@ -79,6 +84,7 @@ describe('Match', () => {
       expect(bushImage.alt).toEqual('George grilling some meat');
       getByText('George Bush');
       getByText('Former US President');
+      getByText('72');
       done();
     });
   });
@@ -117,6 +123,7 @@ describe('Match', () => {
       data: {
         success: true,
         user: {
+          age: 75,
           name: 'Paulo Freire',
           image: {
             src: 'paulo.jpg',
@@ -135,6 +142,7 @@ describe('Match', () => {
 
       findByText('It\'s a match!').then((node) => {
         getByText('Paulo Freire');
+        getByText('75');
         fireEvent.click(node);
         // After click the match screen, it should show the next user
         getByText('George Bush');
