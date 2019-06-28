@@ -43,4 +43,41 @@ describe('Profile', () => {
 
     expect(queryByText(/Who is bad \(not me\)/)).toBe(null);
   });
+
+  it('further clicks should show other pictures, eventually looping to the first one', () => {
+    const extraImages = {
+      images: [
+        {
+          alt: 'Literally me',
+          src: 'image1.jpg',
+        },
+        {
+          alt: 'Me and my dog',
+          src: 'image2.jpg',
+        },
+        {
+          alt: 'My horse',
+          src: 'image3.jpg',
+        },
+        {
+          alt: 'ME DANCING',
+          src: 'image4.jpg',
+        },
+        {
+          alt: 'M.e.',
+          src: 'image5.jpg',
+        },
+  ]};
+    const userWithImages = {...user, ...extraImages};
+    const { getByAltText } = render(<Profile {...userWithImages} />);
+    let clickableImage = getByAltText('Literally me');
+
+    extraImages.images.forEach((image) => {
+      fireEvent.click(clickableImage);
+      clickableImage = getByAltText(image.alt);
+    });
+
+    fireEvent.click(clickableImage);
+    getByAltText('Literally me');
+  });
 });

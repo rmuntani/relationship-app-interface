@@ -33,7 +33,7 @@ export default function Button(props) {
       <img
         alt={image.alt}
         src={image.src}
-        style={{ ...style }}
+        style={{ ...style, margin: '0px' }}
       />
     </ClickBox>
   );

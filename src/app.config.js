@@ -10,10 +10,13 @@ const baseLikeButton = {
   width: '50px',
 };
 
+const margin = '50px';
+
 export const dislikeButton = {
   keys: [39, 68],
   style: {
     ...baseLikeButton,
+    marginLeft: margin,
   },
   text: 'Dislike button',
 };
@@ -23,16 +26,17 @@ export const likeButton = {
   style: {
     ...baseLikeButton,
     float: 'right',
+    marginRight:  margin,
   },
   text: 'Like button',
 };
 
 export const match = {
   style: {
-    border: 'solid 1px blue',
+    border: 'solid 1px gray',
     margin: 'auto',
     height: '500px',
-    width: '500px',
+    width: '300px',
   },
 };
 
@@ -49,12 +53,13 @@ export const modal = {
 
 export const profile = {
   style: {
+    height: '425px',
     margin: 'auto',
     textAlign: 'center',
   },
 };
 
-export const profileDescription = {
+export const profileName = {
   style: {
     backgroundColor: 'black',
     bottom: '0',
@@ -65,6 +70,13 @@ export const profileDescription = {
     width: '100%',
   },
 };
+
+export const profileDescription = {
+  style: {
+    height: '125px',
+    overflow: 'scroll',
+  }
+}
 
 export const profilePictureImage = {
   style: {

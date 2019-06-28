@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 import {
-  profile, profilePicture, profilePictureImage, profileDescription,
+  profile, profilePicture, profilePictureImage, profileDescription, profileName
 } from './app.config';
 
 const Image = posed.img({
@@ -18,15 +18,21 @@ export default function Profile(props) {
   const { images, description } = props;
   const { age, name } = description;
   const [showDescription, setShowDescription] = useState(false);
+  const [imageIndex, nextImage] = useState(0);
 
-  const openDescription = () => {
-    setShowDescription(true);
+  const handleClick = () => {
+    if (!showDescription) setShowDescription(true);
+    else {
+      let nextImageIndex = imageIndex + 1;
+      if (nextImageIndex >= images.length) nextImageIndex = 0;
+      nextImage(nextImageIndex);
+    }
   };
 
   const userDescription = () => {
     const { text } = description;
     return showDescription && (
-      <div>{text}</div>
+      <div style={{ ...profileDescription.style }}>{text}</div>
     );
   };
 
@@ -37,17 +43,17 @@ export default function Profile(props) {
   return (
     <div style={{ ...profile.style }}>
       <button
-        onClick={() => openDescription()}
+        onClick={() => handleClick()}
         style={{ ...profilePicture.style }}
         type="button"
       >
         <Image
-          alt={images[0].alt}
+          alt={images[imageIndex].alt}
           pose={showDescription ? 'reduced' : 'normal'}
-          src={images[0].src}
+          src={images[imageIndex].src}
           style={{ ...profilePictureImage.style }}
         />
-        <div style={{ ...profileDescription.style }}>{`${name}, ${age}`}</div>
+        <div style={{ ...profileName.style }}>{`${name}, ${age}`}</div>
       </button>
       {userDescription()}
     </div>

@@ -1,6 +1,6 @@
 # Relationship APP Interface
 
-This project is simply a relationship app interface clone implemented with React.
+This project is a relationship app interface clone implemented with React.
 
 ## Testing on your browser
 
