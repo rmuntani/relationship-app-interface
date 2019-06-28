@@ -54,9 +54,31 @@ export const profile = {
   },
 };
 
+export const profileDescription = {
+  style: {
+    backgroundColor: 'black',
+    bottom: '0',
+    color: 'white',
+    opacity: '0.7',
+    padding: '0px',
+    position: 'absolute',
+    width: '100%',
+  },
+};
+
+export const profilePictureImage = {
+  style: {
+    height: '400px',
+    width: '300px',
+  },
+};
+
 export const profilePicture = {
   style: {
     ...neutralButton,
+    ...profilePictureImage,
+    padding: '0px',
+    position: 'relative',
   },
 };
 

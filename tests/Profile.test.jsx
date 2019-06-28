@@ -1,0 +1,46 @@
+import React from 'react';
+import {
+  cleanup, fireEvent, render,
+} from '@testing-library/react';
+import Profile from '../src/Profile';
+
+describe('Profile', () => {
+  afterEach(cleanup);
+
+  const user = {
+    images: [{ alt: 'Michael Schumacher', src: 'michael.jpg' }],
+    description: {
+      age: 50,
+      name: 'Michael Schumacher',
+      text: 'Rolling around at the speed of sound.',
+    },
+  };
+
+  const otherUser = {
+    images: [{ alt: 'Michael Jackson', src: 'mj.jpg' }],
+    description: {
+      age: 50,
+      name: 'Michael Jackson',
+      text: 'Who is bad (not me)',
+    },
+  };
+
+  it('image click should toggle profile description', () => {
+    const { container, getByText } = render(<Profile {...user} />);
+    const image = container.querySelector('img[src*=\'michael.jpg\']');
+
+    fireEvent.click(image);
+
+    getByText('Rolling around at the speed of sound.');
+  });
+
+  it('profile data change should hide description text', () => {
+    const { container, queryByText, rerender } = render(<Profile {...user} />);
+    const image = container.querySelector('img[src*=\'michael.jpg\']');
+
+    fireEvent.click(image);
+    rerender(<Profile {...otherUser} />);
+
+    expect(queryByText(/Who is bad \(not me\)/)).toBe(null);
+  });
+});

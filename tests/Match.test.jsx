@@ -55,9 +55,8 @@ describe('Match', () => {
     setImmediate(() => {
       const image = container.querySelector('img[src=\'ernesto.jpg\']');
       expect(image.alt).toEqual('Ernesto at the beach');
-      getByText('Ernesto Guevara');
-      getByText('I\'m a warrior');
-      getByText('39');
+      getByText(/Ernesto Guevara/);
+      getByText(/39/);
       done();
     });
   });
@@ -72,19 +71,17 @@ describe('Match', () => {
       // First user
       const likeButton = container.querySelector('img[alt=\'Like button\']');
       const ernestoImage = container.querySelector('img[src=\'ernesto.jpg\']');
+
       expect(ernestoImage.alt).toEqual('Ernesto at the beach');
-      getByText('Ernesto Guevara');
-      getByText('I\'m a warrior');
-      getByText('39');
+      getByText(/39/);
 
       fireEvent.click(likeButton);
 
       // Second user
       const bushImage = container.querySelector('img[src=\'bush.jpg\']');
       expect(bushImage.alt).toEqual('George grilling some meat');
-      getByText('George Bush');
-      getByText('Former US President');
-      getByText('72');
+      getByText(/George Bush/);
+      getByText(/72/);
       done();
     });
   });
@@ -140,12 +137,12 @@ describe('Match', () => {
 
       fireEvent.click(likeButton);
 
-      findByText('It\'s a match!').then((node) => {
-        getByText('Paulo Freire');
-        getByText('75');
+      findByText(/It's a match!/).then((node) => {
+        getByText(/Paulo Freire/);
+        getByText(/75/);
         fireEvent.click(node);
         // After click the match screen, it should show the next user
-        getByText('George Bush');
+        getByText(/George Bush/);
         done();
       });
     });
