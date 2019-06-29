@@ -26,14 +26,14 @@ export default function Button(props) {
     <ClickBox
       onClick={() => click()}
       onKeyDown={event => handleInteraction(event)}
-      style={{ ...style }}
+      style={{ ...style.buttonStyle }}
       tabIndex="0"
       type="button"
     >
       <img
         alt={image.alt}
         src={image.src}
-        style={{ ...style, margin: '0px' }}
+        style={{ ...style.imageStyle }}
       />
     </ClickBox>
   );

@@ -67,8 +67,9 @@ describe('Profile', () => {
           alt: 'M.e.',
           src: 'image5.jpg',
         },
-  ]};
-    const userWithImages = {...user, ...extraImages};
+      ],
+    };
+    const userWithImages = { ...user, ...extraImages };
     const { getByAltText } = render(<Profile {...userWithImages} />);
     let clickableImage = getByAltText('Literally me');
 

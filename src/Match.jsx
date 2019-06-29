@@ -27,7 +27,8 @@ export default function Match() {
   const [changeBatch, updateChangeBatch] = useState(true);
   const [users, changeUsers] = useState({});
   const [isMatch, setMatch] = useState({ success: false, user: {} });
-
+  const [networkProblems, setNetworkProblems] = useState(false);
+  const [internalProblems, setInternalProblems] = useState(false);
   const getUser = index => users.users[index];
 
   const setNextUser = () => {
@@ -81,22 +82,22 @@ export default function Match() {
   };
 
   useEffect(() => {
-    if (changeBatch) {
-      axios.get(request.base)
-        .then(
-          (response) => {
-            if (response.status === 200) {
-              changeUsers({ users: response.data, currentUser: 0 });
-              updateChangeBatch(false);
-            }
-          },
-        )
-        .catch(
-          () => {
-            updateChangeBatch(true);
-          },
-        );
-    }
+    axios.get(request.base)
+      .then(
+        (response) => {
+          if (response.status < 300) {
+            changeUsers({ users: response.data, currentUser: 0 });
+            updateChangeBatch(false);
+          } else {
+            setInternalProblems(true);
+          }
+        },
+      )
+      .catch(
+        () => {
+          setNetworkProblems(true);
+        },
+      );
   }, []);
 
   const matchRoot = component => <div style={{ ...match.style }}>{component}</div>;
@@ -108,6 +109,20 @@ export default function Match() {
     <Shade key="shade" style={{ ...shade.style }} />,
   ]
   );
+
+  if (internalProblems) {
+    return (
+      matchRoot(
+        <div>
+          {'We\'re experimenting technical difficulties. Please try again latter.'}
+        </div>,
+      )
+    );
+  }
+
+  if (networkProblems) {
+    return (matchRoot(<div>Network problems detected. Please try again latter.</div>));
+  }
 
   if (changeBatch) {
     return (matchRoot(<div>Loading...</div>));

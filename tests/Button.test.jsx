@@ -24,8 +24,11 @@ describe('Button', () => {
     const { container } = render(<Button {...properties} />);
     const button = container.querySelector('button');
 
-    fireEvent.keyDown(button, { key: 'ArrowLeft', keyCode: 37, which: 37 });
+    // Wrong key doesn't trigger effect
+    fireEvent.keyDown(button, { key: 'Enter', code: 13 });
+    expect(properties.click).toHaveBeenCalledTimes(0);
 
+    fireEvent.keyDown(button, { key: 'ArrowLeft', keyCode: 37, which: 37 });
     expect(properties.click).toHaveBeenCalledTimes(1);
   });
 });

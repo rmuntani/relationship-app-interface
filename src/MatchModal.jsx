@@ -1,5 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {
+  profilePicture, profilePictureImage, profileName,
+} from './app.config';
+
 
 export default function MatchModal(props) {
   const {
@@ -10,10 +14,13 @@ export default function MatchModal(props) {
   return (
     <div onClick={() => click()} onKeyDown={() => click()} role="alert">
       <h1>{'It\'s a match!'}</h1>
-      <div>
-        <h3>{name}</h3>
-        <h3>{age}</h3>
-        <img alt={alt()} src={image.src} />
+      <div style={{ ...profilePicture.style }}>
+        <img
+          alt={alt()}
+          src={image.src}
+          style={{ ...profilePictureImage.style }}
+        />
+        <div style={{ ...profileName.style }}>{`${name}, ${age}`}</div>
       </div>
     </div>
   );

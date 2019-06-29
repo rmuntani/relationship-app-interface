@@ -48,6 +48,27 @@ describe('Match', () => {
     },
   ];
 
+  const setUpMatchesTests = () => {
+    axios.get.mockResolvedValue({ data: usersData, status: 200 });
+    axios.post.mockResolvedValue({
+      data: {
+        success: true,
+        user: {
+          age: 75,
+          name: 'Paulo Freire',
+          image: {
+            src: 'paulo.jpg',
+          },
+        },
+      },
+      status: 200,
+    });
+
+    const { container, findByText, getByText } = render(<Match />);
+
+    return { container, findByText, getByText };
+  };
+
   it('should receive users data and show it', (done) => {
     axios.get.mockResolvedValue({ data: usersData, status: 200 });
     const { container, getByText } = render(<Match />);
@@ -104,8 +125,8 @@ describe('Match', () => {
     });
   });
 
-  it('should show load screen when request fails', (done) => {
-    axios.get.mockResolvedValue({ status: 500 });
+  it('should show loading screen while request does not answer', (done) => {
+    axios.get.mockReturnValue(new Promise(() => { }));
     const { getByText } = render(<Match />);
 
     setImmediate(() => {
@@ -114,23 +135,30 @@ describe('Match', () => {
     });
   });
 
-  it('should alert when user has a new match and vanish when clicked', (done) => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    axios.post.mockResolvedValue({
-      data: {
-        success: true,
-        user: {
-          age: 75,
-          name: 'Paulo Freire',
-          image: {
-            src: 'paulo.jpg',
-          },
-        },
-      },
-      status: 200,
-    });
+  it('should show that network has problems if the first request failed', (done) => {
+    axios.get.mockReturnValue(Promise.reject(new Error('Network is bad!')));
 
-    const { container, findByText, getByText } = render(<Match />);
+    const { getByText } = render(<Match />);
+
+    setImmediate(() => {
+      getByText(/Network problems detected. Please try again latter./);
+      done();
+    });
+  });
+
+  it('should show error when response status is not of the 200 family', (done) => {
+    axios.get.mockResolvedValue({ data: '', status: 500 });
+
+    const { getByText } = render(<Match />);
+
+    setImmediate(() => {
+      getByText(/We're experimenting technical difficulties. Please try again latter./);
+      done();
+    });
+  });
+
+  it('should alert when user has a new match and vanish when clicked or on keyPress', (done) => {
+    const { container, findByText, getByText } = setUpMatchesTests();
 
     setImmediate(() => {
       const likeButton = container.querySelector('img[alt=\'Like button\']');
@@ -141,6 +169,25 @@ describe('Match', () => {
         getByText(/Paulo Freire/);
         getByText(/75/);
         fireEvent.click(node);
+        // After click the match screen, it should show the next user
+        getByText(/George Bush/);
+        done();
+      });
+    });
+  });
+
+  it('should alert when user has a new match and vanish when clicked or on keyPress', (done) => {
+    const { container, findByText, getByText } = setUpMatchesTests();
+
+    setImmediate(() => {
+      const likeButton = container.querySelector('img[alt=\'Like button\']');
+
+      fireEvent.click(likeButton);
+
+      findByText(/It's a match!/).then((node) => {
+        getByText(/Paulo Freire/);
+        getByText(/75/);
+        fireEvent.keyDown(node, { key: 'Enter', code: 13 });
         // After click the match screen, it should show the next user
         getByText(/George Bush/);
         done();
