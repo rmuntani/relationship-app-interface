@@ -61,6 +61,25 @@ export const modal = {
   },
 };
 
+export const navigationBar = {
+  style: {
+    height: '18px',
+    margin: 'auto',
+    width: '300px',
+  },
+};
+
+export const navigationButton = {
+  style: {
+    border: 'solid 1px gray',
+    background: 'black',
+    color: 'white',
+    padding: '0px',
+    height: '18px',
+    width: '150px',
+  }
+}
+
 export const profile = {
   style: {
     height: '425px',

@@ -91,3 +91,7 @@ get '/suggestions' do
       }
     }].to_json
 end
+
+get '/*' do
+  redirect to '/index.html'
+end

@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Match from './Match.jsx';
+import App from './App.jsx';
 
-ReactDOM.render(<Match />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));

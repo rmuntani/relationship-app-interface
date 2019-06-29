@@ -10,6 +10,7 @@ import {
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
 import MatchModal from './MatchModal';
+import NavigationBar from './NavigationBar';
 
 
 const Modal = posed.div({
@@ -129,21 +130,24 @@ export default function Match() {
   }
 
   return (
-    matchRoot(
-      <React.Fragment>
-        <PoseGroup>
-          {isMatch.success && matchModal()}
-        </PoseGroup>
-        <Profile {
-        ...{
-          images: getUser(users.currentUser).images,
-          description: getUser(users.currentUser).description,
-        }
-        }
-        />
-        <Button {...dislikeProperties} />
-        <Button {...likeProperties} />
-      </React.Fragment>,
-    )
+    <React.Fragment>
+      {matchRoot(
+        <React.Fragment>
+          <PoseGroup>
+            {isMatch.success && matchModal()}
+          </PoseGroup>
+          <Profile {
+          ...{
+            images: getUser(users.currentUser).images,
+            description: getUser(users.currentUser).description,
+          }
+          }
+          />
+          <Button {...dislikeProperties} />
+          <Button {...likeProperties} />
+        </React.Fragment>,
+      )}
+      <NavigationBar />
+    </React.Fragment>
   );
 }
