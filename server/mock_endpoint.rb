@@ -27,7 +27,11 @@ get '/suggestions' do
       images: [{
         src: 'pictures/ernesto.jpg',
         alt: 'Ernesto at the beach',
-      }],
+      },
+    {
+      src: 'pictures/ernesto2.jpg',
+      alt: 'Ernestinho',
+    }],
       description: {
         age: 39,
         name: 'Ernesto Guevara',

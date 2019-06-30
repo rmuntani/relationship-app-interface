@@ -1,0 +1,1 @@
+docker run -v $(pwd):/react -p 1337:1337 webpack node server/websocket.js
