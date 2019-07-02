@@ -6,6 +6,7 @@ describe('MatchModal', () => {
   afterEach(cleanup);
 
   const matchData = {
+    id: 1,
     age: 75,
     name: 'Paulo Freire',
     image: {

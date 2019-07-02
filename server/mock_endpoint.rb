@@ -9,6 +9,7 @@ post '/like' do
   {
     success: true,
     user: {
+      id: 1,
       age: 75,
       name: 'Paulo Freire',
       image: {
@@ -94,6 +95,48 @@ get '/suggestions' do
         text: 'C\'est moi',
       }
     }].to_json
+end
+
+get '/user/:id/matches' do
+  content_type :json
+  [
+    {
+      id: 1,
+      age: 75,
+      name: 'Paulo Freire',
+      image: {
+        alt: 'It\'s me, Paulo',
+        src: 'paulo.jpg',
+      },
+    },
+    {
+      id: 2,
+      age: 39,
+      name: 'Ernesto Guevara',
+      image: {
+        alt: 'Ernesto at the beach',
+        src: 'ernesto.jpg',
+      },
+    },
+    {
+      id: 3,
+      age: 72,
+      name: 'George Bush',
+      image: {
+        alt: 'George grilling some meat',
+        src: 'bush.jpg',
+      },
+    },
+    {
+      id: 4,
+      age: 53,
+      name: 'Rene Descartes',
+      image: {
+        alt: 'Rene discarding some trash',
+        src: 'rene.jpg',
+      },
+    },
+  ].to_json
 end
 
 get '/*' do

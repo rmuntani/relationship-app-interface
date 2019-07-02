@@ -4,14 +4,12 @@ import posed, { PoseGroup } from 'react-pose';
 import Button from './Button';
 import Profile from './Profile';
 import {
-  dislikeButton, likeButton, match, modal,
+  app, dislikeButton, likeButton, modal,
   request, shade,
 } from './app.config';
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
 import MatchModal from './MatchModal';
-import NavigationBar from './NavigationBar';
-
 
 const Modal = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -101,7 +99,7 @@ export default function Match() {
       );
   }, []);
 
-  const matchRoot = component => <div style={{ ...match.style }}>{component}</div>;
+  const matchRoot = component => <div style={{ ...app.style }}>{component}</div>;
 
   const matchModal = () => ([
     <Modal key="modal" style={{ ...modal.style }}>
@@ -147,7 +145,6 @@ export default function Match() {
           <Button {...likeProperties} />
         </React.Fragment>,
       )}
-      <NavigationBar />
     </React.Fragment>
   );
 }

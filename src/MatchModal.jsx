@@ -28,10 +28,14 @@ export default function MatchModal(props) {
 
 MatchModal.propTypes = {
   age: PropTypes.number.isRequired,
-  click: PropTypes.func.isRequired,
+  click: PropTypes.func,
   name: PropTypes.string.isRequired,
   image: PropTypes.shape({
     alt: PropTypes.string,
     src: PropTypes.string.isRequired,
   }).isRequired,
+};
+
+MatchModal.defaultProps = {
+  click: null,
 };

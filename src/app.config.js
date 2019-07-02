@@ -12,6 +12,15 @@ const baseLikeButton = {
 
 const margin = '50px';
 
+export const app = {
+  style: {
+    border: 'solid 1px gray',
+    margin: 'auto',
+    height: '500px',
+    width: '300px',
+  },
+};
+
 export const dislikeButton = {
   keys: [39, 68],
   style: {
@@ -41,15 +50,6 @@ export const likeButton = {
   text: 'Like button',
 };
 
-export const match = {
-  style: {
-    border: 'solid 1px gray',
-    margin: 'auto',
-    height: '500px',
-    width: '300px',
-  },
-};
-
 export const modal = {
   style: {
     background: 'white',
@@ -77,8 +77,8 @@ export const navigationButton = {
     padding: '0px',
     height: '18px',
     width: '150px',
-  }
-}
+  },
+};
 
 export const profile = {
   style: {

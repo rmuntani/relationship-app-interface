@@ -8,6 +8,7 @@ describe('Profile', () => {
   afterEach(cleanup);
 
   const user = {
+    id: 1,
     images: [{ alt: 'Michael Schumacher', src: 'michael.jpg' }],
     description: {
       age: 50,
@@ -17,6 +18,7 @@ describe('Profile', () => {
   };
 
   const otherUser = {
+    id: 2,
     images: [{ alt: 'Michael Jackson', src: 'mj.jpg' }],
     description: {
       age: 50,
