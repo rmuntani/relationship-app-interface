@@ -1,14 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
-  app, chatList, chatListItem, chatListUsername,
-  chatPicture, request,
+  app, chatList, chatListItem, request,
 } from './app.config';
-import Default from './imgs/default.svg';
+import ChatItem from './ChatItem';
 
-export default function ChatSelection() {
+export default function ChatSelection(props) {
   const [users, updateUsers] = useState([]);
   const [isDataLoaded, setDataLoaded] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [networkFailed, setNetworkFailed] = useState(false);
+  const { onItemClick } = props;
 
   useEffect(() => {
     axios
@@ -17,22 +20,37 @@ export default function ChatSelection() {
         if (response.status < 300) {
           updateUsers(response.data);
           setDataLoaded(true);
+        } else {
+          setLoadFailed(true);
         }
       })
       .catch(() => {
-
+        setNetworkFailed(true);
       });
   }, []);
 
-  /* eslint-disable no-param-reassign */
-  const handleError = (event) => {
-    event.target.onerror = null;
-    event.target.src = Default;
-  };
-  /* eslint-enable no-param-reassign */
+  if (networkFailed) {
+    return (
+      <div style={{ ...app.style }}>
+        Network problems detected. Please try again latter.
+      </div>
+    );
+  }
+
+  if (loadFailed) {
+    return (
+      <div style={{ ...app.style }}>
+        We're experimenting technical difficulties. Please try again latter.
+      </div>
+    );
+  }
 
   if (!isDataLoaded) {
-    return (<div>Loading...</div>);
+    return (
+      <div style={{ ...app.style }}>
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -42,17 +60,10 @@ export default function ChatSelection() {
         users.map(user => (
           <li
             key={user.id}
+            onClick={() => onItemClick(user)}
             style={{ ...chatListItem.style }}
           >
-            <img
-              alt={user.image.alt}
-              onError={event => handleError(event)}
-              src={user.image.src}
-              style={{ ...chatPicture.style}}
-            />
-            <div style={{ ...chatListUsername.style }}>
-              {`${user.name}, ${user.age}`}
-            </div>
+            <ChatItem user={user} />
           </li>
         ))
       }
@@ -60,3 +71,7 @@ export default function ChatSelection() {
     </div>
   );
 }
+
+ChatSelection.propTypes = {
+  onItemClick: PropTypes.func.isRequired,
+};

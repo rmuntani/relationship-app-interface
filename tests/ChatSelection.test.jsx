@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { cleanup, render, wait } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import React from 'react';
 import ChatSelection from '../src/ChatSelection';
 
@@ -71,25 +71,24 @@ describe('ChatSelection', () => {
     });
   });
 
-  it('should render a default image if original image is not available', () => {
-    const lackingImage = [
-      {
-        id: 1,
-        age: 75,
-        name: 'Paulo Freire',
-        image: {
-          alt: 'It\'s me, Paulo',
-          src: null,
-        },
-      },
-    ];
-    axios.get.mockResolvedValue({ data: lackingImage, status: 200 });
-    const { container, getByText } = render(<ChatSelection />);
+  it('should show when server response is not ok', (done) => {
+    axios.get.mockResolvedValue({ data: null, status: 500 });
+    const { getByText } = render(<ChatSelection />);
 
-    wait(container.querySelector('img[src=\'default\']')).then((image) => {
-      expect(image.alt).toEqual('It\'s me, Paulo');
-      getByText(/Paulo Freire/);
-      getByText(/75/);
+    setImmediate(() => {
+      getByText(/We're experimenting technical difficulties. Please try again latter./);
+      done();
+    });
+  });
+
+  it('should show that network has problems if the first request failed', (done) => {
+    axios.get.mockReturnValue(Promise.reject(new Error('Network is bad!')));
+
+    const { getByText } = render(<ChatSelection />);
+
+    setImmediate(() => {
+      getByText(/Network problems detected. Please try again latter./);
+      done();
     });
   });
 });
