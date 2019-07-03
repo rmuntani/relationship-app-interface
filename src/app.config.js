@@ -21,6 +21,37 @@ export const app = {
   },
 };
 
+export const chatList = {
+  style: {
+    margin: '0px',
+    padding: '0px',
+    listStyle: 'none',
+  },
+};
+
+export const chatListItem = {
+  style: {
+    border: 'solid 1px gray',
+    height: '50px',
+    padding: '5px',
+  },
+};
+
+export const chatListUsername = {
+  style: {
+    marginLeft: '20%',
+    marginTop: '15px',
+  },
+};
+
+export const chatPicture = {
+  style: {
+    float: 'left',
+    height: '50px',
+    width: '50px',
+  },
+};
+
 export const dislikeButton = {
   keys: [39, 68],
   style: {
@@ -127,6 +158,7 @@ export const request = {
   base: 'http://localhost:4567/suggestions',
   dislike: 'http://localhost:4567/dislike',
   like: 'http://localhost:4567/like',
+  matches: id => `http://localhost:4567/user/${id}/matches`,
 };
 
 export const shade = {
