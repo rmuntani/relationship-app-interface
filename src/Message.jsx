@@ -24,10 +24,16 @@ export default function Message(props) {
 }
 
 Message.propTypes = {
-  messages: PropTypes.shape(
-    {
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-    },
-  ).isRequired,
+  messages: PropTypes.arrayOf(
+    PropTypes.shape(
+      {
+        id: PropTypes.number.isRequired,
+        text: PropTypes.string.isRequired,
+      },
+    ),
+  ),
+};
+
+Message.defaultProps = {
+  messages: [],
 };

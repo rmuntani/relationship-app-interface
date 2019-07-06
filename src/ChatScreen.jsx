@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { app, chatListItem, CURRENT_USER } from './app.config';
 import ChatItem from './ChatItem';
-import chatClient, { sendMessageToUser } from './chatClient';
-
+import Message from './Message';
+import { sendMessageToUser, chatConnection } from './chatClient';
 
 export default function ChatScreen(props) {
   const {
@@ -24,19 +24,18 @@ export default function ChatScreen(props) {
   };
 
   const onMessage = (newMessage) => {
-    const receivedMessage = { user: id, text: newMessage };
+    const { data } = newMessage;
+    const receivedMessage = { user: id, text: data };
     updateMessageHistory([...messageHistory, receivedMessage]);
   };
 
-  // useEffect(() => {
-  //   const handleEvents = {
-  //     onClose: null,
-  //     onError: null,
-  //     onMessage,
-  //     onOpen: null,
-  //   };
-  //   chatClient(handleEvents);
-  // }, []);
+  useEffect(() => {
+    const handleEvents = {
+      onClose: () => {},
+      onMessage,
+    };
+    chatConnection(handleEvents);
+  }, []);
 
   return (
     <div style={{ ...app.style }}>
@@ -49,6 +48,7 @@ export default function ChatScreen(props) {
           type="text"
           value={message}
         />
+        <Message messages={messageHistory} />
         <button type="button" onClick={() => sendMessage()}>Send</button>
       </div>
     </div>

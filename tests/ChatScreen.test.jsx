@@ -5,9 +5,10 @@ import { sendMessageToUser } from '../src/chatClient';
 
 jest.mock('../src/chatClient', () => ({
   sendMessageToUser: jest.fn(),
+  chatConnection: jest.fn(),
 }));
 
-describe('ChatScreen', () => {
+describe('ChatScreen without WebSocket', () => {
   afterEach(cleanup);
 
   it('should send a message to the websocket server', () => {

@@ -1,16 +1,37 @@
-const connection = new WebSocket('ws://127.0.0.1:1337');
+import { webSocketConfig } from './app.config';
 
-export default function chatClient(handleEvents) {
-  window.WebSocket = window.WebSocket || window.MozWebSocket;
+let connection = null;
+let connectionPromise = null;
+let connectionOpen = false;
 
-  connection.onclose = () => handleEvents.onclose();
-  connection.onopen = () => handleEvents.onclose();
-  connection.onerror = error => handleEvents.onerror(error);
-  connection.onmessage = message => handleEvents.onmessage(message);
+export function initializeConnection() {
+  if (!connectionOpen) {
+    window.WebSocket = window.WebSocket || window.MozWebSocket;
+    connection = new WebSocket(webSocketConfig.server);
+    connectionPromise = new Promise(((resolve, reject) => {
+      connection.onopen = () => resolve(true);
+      connection.error = () => reject(false);
+    }));
+  }
+}
+
+export function chatConnection(handleEvents) {
+  initializeConnection();
+
+  connection.onclose = () => handleEvents.onClose();
+  connection.onmessage = message => handleEvents.onMessage(message);
 }
 
 export function sendMessageToUser(message, id) {
-  if (connection === undefined || connection === null) return;
+  if (!connectionOpen) {
+    initializeConnection();
+  }
 
-  connection.send({ message, id });
+  connectionPromise
+    .then(() => {
+      connection.send({ message, id });
+    })
+    .catch(() => {
+      connectionOpen = false;
+    });
 }

@@ -189,3 +189,7 @@ export const request = {
   like: 'http://localhost:4567/like',
   matches: id => `http://localhost:4567/user/${id}/matches`,
 };
+
+export const webSocketConfig = {
+  server: 'ws://127.0.0.1:1337',
+};
