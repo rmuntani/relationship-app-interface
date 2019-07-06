@@ -10,6 +10,10 @@ const baseLikeButton = {
   width: '50px',
 };
 
+const defaultMessageStyle = {
+
+};
+
 const margin = '50px';
 
 export const app = {
@@ -49,6 +53,12 @@ export const chatPicture = {
     float: 'left',
     height: '50px',
     width: '50px',
+  },
+};
+
+export const currentUserMessage = {
+  style: {
+    ...defaultMessageStyle,
   },
 };
 
@@ -111,6 +121,12 @@ export const navigationButton = {
   },
 };
 
+export const otherUserMessage = {
+  style: {
+    ...defaultMessageStyle,
+  },
+};
+
 export const profile = {
   style: {
     height: '425px',
@@ -154,13 +170,6 @@ export const profilePicture = {
   },
 };
 
-export const request = {
-  base: 'http://localhost:4567/suggestions',
-  dislike: 'http://localhost:4567/dislike',
-  like: 'http://localhost:4567/like',
-  matches: id => `http://localhost:4567/user/${id}/matches`,
-};
-
 export const shade = {
   style: {
     background: 'rgba(0, 0, 0, 0.8)',
@@ -170,4 +179,13 @@ export const shade = {
     right: '0',
     top: '0',
   },
+};
+
+export const CURRENT_USER = 0;
+
+export const request = {
+  base: 'http://localhost:4567/suggestions',
+  dislike: 'http://localhost:4567/dislike',
+  like: 'http://localhost:4567/like',
+  matches: id => `http://localhost:4567/user/${id}/matches`,
 };
