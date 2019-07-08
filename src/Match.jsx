@@ -10,6 +10,7 @@ import {
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
 import MatchModal from './MatchModal';
+import { errors, loading } from './app.text';
 
 const Modal = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -113,18 +114,18 @@ export default function Match() {
     return (
       matchRoot(
         <div>
-          {'We\'re experimenting technical difficulties. Please try again latter.'}
+          {errors.internal}
         </div>,
       )
     );
   }
 
   if (networkProblems) {
-    return (matchRoot(<div>Network problems detected. Please try again latter.</div>));
+    return (matchRoot(<div>{errors.network}.</div>));
   }
 
   if (changeBatch) {
-    return (matchRoot(<div>Loading...</div>));
+    return (matchRoot(<div>{loading}</div>));
   }
 
   return (

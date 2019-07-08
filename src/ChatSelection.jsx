@@ -5,6 +5,7 @@ import {
   app, chatList, chatListItem, request,
 } from './app.config';
 import ChatItem from './ChatItem';
+import { errors, loading } from './app.text';
 
 export default function ChatSelection(props) {
   const [users, updateUsers] = useState([]);
@@ -32,7 +33,7 @@ export default function ChatSelection(props) {
   if (networkFailed) {
     return (
       <div style={{ ...app.style }}>
-        Network problems detected. Please try again latter.
+        {errors.network}
       </div>
     );
   }
@@ -40,7 +41,7 @@ export default function ChatSelection(props) {
   if (loadFailed) {
     return (
       <div style={{ ...app.style }}>
-        We're experimenting technical difficulties. Please try again latter.
+        {errors.internal}
       </div>
     );
   }
@@ -48,7 +49,7 @@ export default function ChatSelection(props) {
   if (!isDataLoaded) {
     return (
       <div style={{ ...app.style }}>
-        Loading...
+        {loading}
       </div>
     );
   }

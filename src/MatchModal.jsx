@@ -3,6 +3,7 @@ import React from 'react';
 import {
   profilePicture, profilePictureImage, profileName,
 } from './app.config';
+import { matchText } from './app.text';
 
 
 export default function MatchModal(props) {
@@ -13,7 +14,7 @@ export default function MatchModal(props) {
 
   return (
     <div onClick={() => click()} onKeyDown={() => click()} role="alert">
-      <h1>{'It\'s a match!'}</h1>
+      <h1>{matchText}</h1>
       <div style={{ ...profilePicture.style }}>
         <img
           alt={alt()}

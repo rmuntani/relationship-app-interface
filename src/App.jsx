@@ -3,6 +3,7 @@ import React from 'react';
 import { navigationBar, navigationButton } from './app.config';
 import Chat from './Chat';
 import Match from './Match';
+import { app } from './app.text';
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
             style={{ ...navigationButton.style }}
             type="button"
           >
-            Match!
+            {app.chat}
           </button>
         </Link>
         <Link to="/chat">
@@ -24,7 +25,7 @@ export default function App() {
             style={{ ...navigationButton.style }}
             type="button"
           >
-            Chat!
+            {app.match}
           </button>
         </Link>
       </div>

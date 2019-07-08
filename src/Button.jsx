@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import posed from 'react-pose';
+import { errors } from './app.text';
 
 const ClickBox = posed.button({
   pressable: true,
@@ -47,7 +48,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  image: { alt: 'No image found', src: null },
+  image: { alt: errors.noImage, src: null },
   keysDown: [],
   style: {},
 };
