@@ -27,7 +27,6 @@ wsServer.on('request', function(request) {
         newConnection.send(message.utf8Data);
       }
     });
-    console.log(message);
   });
 
   connection.on('close', function(connection) {

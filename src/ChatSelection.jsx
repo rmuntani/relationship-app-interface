@@ -73,5 +73,9 @@ export default function ChatSelection(props) {
 }
 
 ChatSelection.propTypes = {
-  onItemClick: PropTypes.func.isRequired,
+  onItemClick: PropTypes.func,
+};
+
+ChatSelection.defaultProps = {
+  onItemClick: null,
 };

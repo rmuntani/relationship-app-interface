@@ -4,14 +4,24 @@ let connection = null;
 let connectionPromise = null;
 let connectionOpen = false;
 
-export function initializeConnection() {
+function initializeConnection() {
   if (!connectionOpen) {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
     connection = new WebSocket(webSocketConfig.server);
-    connectionPromise = new Promise(((resolve, reject) => {
-      connection.onopen = () => resolve(true);
-      connection.error = () => reject(false);
-    }));
+    connectionPromise = new Promise(
+      (
+        (resolve, reject) => {
+          connection.onopen = () => resolve(true);
+          connection.error = () => reject(false);
+        }
+      ),
+    )
+      .then(() => {
+        connectionOpen = true;
+      })
+      .catch(() => {
+        connectionOpen = false;
+      });
   }
 }
 
@@ -29,9 +39,14 @@ export function sendMessageToUser(message, id) {
 
   connectionPromise
     .then(() => {
-      connection.send({ message, id });
+      connection.send(JSON.stringify({ text: message, id }));
     })
     .catch(() => {
       connectionOpen = false;
     });
+}
+
+// For testing purposes only
+export function closeConnection() {
+  connection.close();
 }

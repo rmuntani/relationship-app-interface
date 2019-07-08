@@ -1,22 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CURRENT_USER, otherUserMessage, currentUserMessage } from './app.config';
+import {
+  CURRENT_USER, otherUserMessage, currentUserMessage, messageList,
+} from './app.config';
 
 export default function Message(props) {
   const { messages } = props;
 
   return (
-    <ul>
-      {messages.map((message) => {
+    <ul style={{ ...messageList.style }}>
+      {messages.map((message, index) => {
         let messageStyle;
-        if (message.id === CURRENT_USER) {
-          messageStyle = currentUserMessage.message;
+        if (message.user === CURRENT_USER) {
+          messageStyle = currentUserMessage.style;
         } else {
-          messageStyle = otherUserMessage.message;
+          messageStyle = otherUserMessage.style;
         }
 
         return (
-          <li style={messageStyle}>{message.text}</li>
+          <li
+            key={index}
+            style={messageStyle}
+          >
+            {message.text}
+          </li>
         );
       })}
     </ul>
@@ -27,8 +34,8 @@ Message.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape(
       {
-        id: PropTypes.number.isRequired,
-        text: PropTypes.string.isRequired,
+        id: PropTypes.number,
+        text: PropTypes.string,
       },
     ),
   ),

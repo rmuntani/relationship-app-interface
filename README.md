@@ -6,6 +6,8 @@ This project is a relationship app interface clone implemented with React.
 
 After cloning the project on your machine, installing Docker and running script/setup, run script/node/build to generate a webpack'd js file and its other resources in server/public. Then, run script/server and access `localhost:4567/index.html`.
 
+To make the chat work, run script/node/websocket. Messages are broadcasted to all clients connected to the server.
+
 ## About style/animations
 
 This project uses only inline style, and all the configurations are at app.config.js.

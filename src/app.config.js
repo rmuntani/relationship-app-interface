@@ -11,7 +11,13 @@ const baseLikeButton = {
 };
 
 const defaultMessageStyle = {
-
+  border: 'solid 1px gray',
+  borderRadius: '20px',
+  display: 'block',
+  margin: '10px',
+  padding: '5px',
+  width: '140px',
+  wordWrap: 'break-word',
 };
 
 const margin = '50px';
@@ -59,6 +65,8 @@ export const chatPicture = {
 export const currentUserMessage = {
   style: {
     ...defaultMessageStyle,
+    marginRight: 'auto',
+    textAlign: 'left',
   },
 };
 
@@ -124,6 +132,42 @@ export const navigationButton = {
 export const otherUserMessage = {
   style: {
     ...defaultMessageStyle,
+    marginLeft: 'auto',
+    textAlign: 'right',
+  },
+};
+
+export const messageButton = {
+  style: {
+    width: 'auto',
+  },
+};
+
+export const messageInput = {
+  style: {
+    width: '200px',
+  },
+};
+
+export const messageList = {
+  style: {
+    listStyle: 'none',
+    padding: '0px',
+  },
+};
+
+export const messageScreen = {
+  style: {
+    height: '450px',
+    position: 'relative',
+  },
+};
+
+export const messageScreenInputs = {
+  style: {
+    bottom: '30px',
+    position: 'absolute',
+    width: '300px',
   },
 };
 
