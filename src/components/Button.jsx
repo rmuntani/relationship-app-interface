@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import posed from 'react-pose';
-import { errors } from './app.text';
+import { errors } from '../configs/app.text';
 
 const ClickBox = posed.button({
   pressable: true,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   CURRENT_USER, otherUserMessage, currentUserMessage, messageList,
-} from './app.config';
+} from '../configs/app.config';
 
 export default function Message(props) {
   const { messages } = props;

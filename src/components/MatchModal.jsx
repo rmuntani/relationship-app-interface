@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {
   profilePicture, profilePictureImage, profileName,
-} from './app.config';
-import { matchText } from './app.text';
+} from '../configs/app.config';
+import { matchText } from '../configs/app.text';
 
 
 export default function MatchModal(props) {

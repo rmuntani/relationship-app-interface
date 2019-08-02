@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import posed from 'react-pose';
 import {
   profile, profilePicture, profilePictureImage, profileDescription, profileName,
-} from './app.config';
+} from '../configs/app.config';
 
 const Image = posed.img({
   normal: {

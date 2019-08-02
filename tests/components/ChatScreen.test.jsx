@@ -1,9 +1,9 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import ChatScreen from '../src/ChatScreen';
-import { sendMessageToUser } from '../src/chatClient';
+import ChatScreen from '../../src/components/ChatScreen';
+import { sendMessageToUser } from '../../src/chatClient';
 
-jest.mock('../src/chatClient', () => ({
+jest.mock('../../src/chatClient', () => ({
   sendMessageToUser: jest.fn(),
   chatConnection: jest.fn(),
 }));

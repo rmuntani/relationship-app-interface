@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Default from './imgs/default.svg';
 import {
   chatListUsername, chatPicture,
-} from './app.config';
+} from '../configs/app.config';
 
 export default function ChatItem(props) {
   const { user } = props;

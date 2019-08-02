@@ -1,6 +1,6 @@
 import WS from 'jest-websocket-mock';
 import { sendMessageToUser, chatConnection, closeConnection } from '../src/chatClient';
-import { webSocketConfig } from '../src/app.config';
+import { webSocketConfig } from '../src/configs/app.config';
 
 describe('chatClient', () => {
   const server = new WS(webSocketConfig.server);

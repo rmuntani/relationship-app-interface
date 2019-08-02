@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { cleanup, render } from '@testing-library/react';
 import React from 'react';
-import ChatSelection from '../src/ChatSelection';
+import ChatSelection from '../../src/components/ChatSelection';
 
 jest.mock('axios');
 

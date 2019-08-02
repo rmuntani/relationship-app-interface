@@ -1,9 +1,9 @@
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import React from 'react';
-import { navigationBar, navigationButton } from './app.config';
+import { navigationBar, navigationButton } from '../configs/app.config';
 import Chat from './Chat';
 import Match from './Match';
-import { app } from './app.text';
+import { app } from '../configs/app.text';
 
 export default function App() {
   return (

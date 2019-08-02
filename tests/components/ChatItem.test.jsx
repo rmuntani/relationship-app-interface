@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import ChatItem from '../src/ChatItem';
+import ChatItem from '../../src/components/ChatItem';
 
 describe('ChatItem', () => {
   afterEach(cleanup);

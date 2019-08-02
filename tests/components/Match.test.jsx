@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
-import Match from '../src/Match';
-import { request } from '../src/app.config';
+import Match from '../../src/components/Match';
+import { request } from '../../src/configs/app.config';
 
 jest.mock('axios');
 

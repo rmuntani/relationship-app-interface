@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import Button from '../src/Button';
-import { likeButton } from '../src/app.config';
+import Button from '../../src/components/Button';
+import { likeButton } from '../../src/configs/app.config';
 
 describe('Button', () => {
   afterEach(cleanup);

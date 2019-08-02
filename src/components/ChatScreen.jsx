@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   app, chatListItem, CURRENT_USER, messageInput, messageScreen, messageScreenInputs, messageButton,
-} from './app.config';
+} from '../configs/app.config';
 import ChatItem from './ChatItem';
 import Message from './Message';
-import { sendMessageToUser, chatConnection } from './chatClient';
+import { sendMessageToUser, chatConnection } from '../chatClient';
 
 export default function ChatScreen(props) {
   const {

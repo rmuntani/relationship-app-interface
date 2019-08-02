@@ -2,7 +2,7 @@ import React from 'react';
 import {
   cleanup, fireEvent, render,
 } from '@testing-library/react';
-import Profile from '../src/Profile';
+import Profile from '../../src/components/Profile';
 
 describe('Profile', () => {
   afterEach(cleanup);

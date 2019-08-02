@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   app, chatList, chatListItem, request,
-} from './app.config';
+} from '../configs/app.config';
 import ChatItem from './ChatItem';
-import { errors, loading } from './app.text';
+import { errors, loading } from '../configs/app.text';
 
 export default function ChatSelection(props) {
   const [users, updateUsers] = useState([]);

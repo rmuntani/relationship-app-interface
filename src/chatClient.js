@@ -1,4 +1,4 @@
-import { webSocketConfig } from './app.config';
+import { webSocketConfig } from './configs/app.config';
 
 let connection = null;
 let connectionPromise = null;

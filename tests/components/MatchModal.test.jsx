@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
-import MatchModal from '../src/MatchModal';
+import MatchModal from '../../src/components/MatchModal';
 
 describe('MatchModal', () => {
   afterEach(cleanup);

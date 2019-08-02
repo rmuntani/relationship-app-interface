@@ -6,11 +6,11 @@ import Profile from './Profile';
 import {
   app, dislikeButton, likeButton, modal,
   request, shade,
-} from './app.config';
+} from '../configs/app.config';
 import LikeImage from './imgs/like.svg';
 import DislikeImage from './imgs/dislike.svg';
 import MatchModal from './MatchModal';
-import { errors, loading } from './app.text';
+import { errors, loading } from '../configs/app.text';
 
 const Modal = posed.div({
   enter: { y: 0, opacity: 1 },

@@ -1,8 +1,8 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import WS from 'jest-websocket-mock';
-import ChatScreen from '../src/ChatScreen';
-import { webSocketConfig } from '../src/app.config';
+import ChatScreen from '../../src/components/ChatScreen';
+import { webSocketConfig } from '../../src/configs/app.config';
 
 describe('ChatScreen with WebSocket', () => {
   afterEach(cleanup);
