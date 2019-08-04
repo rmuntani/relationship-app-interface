@@ -1,86 +1,72 @@
 import React from 'react';
-import {
-  cleanup, fireEvent, render,
-} from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import Profile from '../../src/components/Profile';
 
 describe('Profile', () => {
   afterEach(cleanup);
 
-  const user = {
-    id: 1,
-    images: [{ alt: 'Michael Schumacher', src: 'michael.jpg' }],
+  const props = {
     description: {
       age: 50,
       name: 'Michael Schumacher',
       text: 'Rolling around at the speed of sound.',
     },
-  };
-
-  const otherUser = {
-    id: 2,
-    images: [{ alt: 'Michael Jackson', src: 'mj.jpg' }],
-    description: {
-      age: 50,
-      name: 'Michael Jackson',
-      text: 'Who is bad (not me)',
+    images: [{
+      alt: 'Michael Schumacher',
+      src: 'ms.jpg',
     },
+    {
+      alt: 'Michael skiing',
+      src: 'mski.jpg',
+    }],
+    imageClick: jest.fn(),
+    imageIndex: 0,
+    showDescription: false,
   };
 
-  it('image click should toggle profile description', () => {
-    const { container, getByText } = render(<Profile {...user} />);
-    const image = container.querySelector('img[src*=\'michael.jpg\']');
+  it('should show an image', () => {
+    const { getByAltText } = render(<Profile {...props} />);
+    const image = getByAltText('Michael Schumacher');
+
+    expect(image.src).toMatch(/ms\.jpg/);
+  });
+
+  it('should show the user description, with age and name', () => {
+    const { getByText } = render(<Profile {...props} />);
+
+    getByText(/Michael Schumacher, 50/);
+  });
+
+  it('should not show user text when a flag is not set', () => {
+    const { queryByText } = render(<Profile {...props} />);
+
+    expect(queryByText(/Rolling around at the speed of sound./)).toBe(null);
+  });
+
+  it('should show user text when a flag is set', () => {
+    const propsWithFlagSet = { ...props, showDescription: true };
+    const { getByText } = render(<Profile {...propsWithFlagSet} />);
+
+    getByText(/Rolling around at the speed of sound./);
+  });
+
+  it('should show an image of the array according to a props index', () => {
+    const propsWithIndex1 = { ...props, imageIndex: 1 };
+    const { getByAltText, queryByAltText } = render(<Profile {...propsWithIndex1} />);
+    const image = getByAltText(/Michael skiing/);
+    const missingImage = queryByAltText(/Michael Schumacher/);
+
+    expect(image.src).toMatch(/mski.jpg/);
+    expect(missingImage).toBe(null);
+  });
+
+  // State changes and it's logic are handled by Redux, and are tested on the container component
+  it('should have a clickable image that will trigger all state changes', () => {
+    const { getByAltText } = render(<Profile {...props} />);
+    const image = getByAltText('Michael Schumacher');
 
     fireEvent.click(image);
 
-    getByText('Rolling around at the speed of sound.');
-  });
-
-  it('profile data change should hide description text', () => {
-    const { container, queryByText, rerender } = render(<Profile {...user} />);
-    const image = container.querySelector('img[src*=\'michael.jpg\']');
-
-    fireEvent.click(image);
-    rerender(<Profile {...otherUser} />);
-
-    expect(queryByText(/Who is bad \(not me\)/)).toBe(null);
-  });
-
-  it('further clicks should show other pictures, eventually looping to the first one', () => {
-    const extraImages = {
-      images: [
-        {
-          alt: 'Literally me',
-          src: 'image1.jpg',
-        },
-        {
-          alt: 'Me and my dog',
-          src: 'image2.jpg',
-        },
-        {
-          alt: 'My horse',
-          src: 'image3.jpg',
-        },
-        {
-          alt: 'ME DANCING',
-          src: 'image4.jpg',
-        },
-        {
-          alt: 'M.e.',
-          src: 'image5.jpg',
-        },
-      ],
-    };
-    const userWithImages = { ...user, ...extraImages };
-    const { getByAltText } = render(<Profile {...userWithImages} />);
-    let clickableImage = getByAltText('Literally me');
-
-    extraImages.images.forEach((image) => {
-      fireEvent.click(clickableImage);
-      clickableImage = getByAltText(image.alt);
-    });
-
-    fireEvent.click(clickableImage);
-    getByAltText('Literally me');
+    expect(props.imageClick).toHaveBeenCalledTimes(1);
   });
 });

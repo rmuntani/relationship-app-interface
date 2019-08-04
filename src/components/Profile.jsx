@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import posed from 'react-pose';
 import {
   profile, profilePicture, profilePictureImage, profileDescription, profileName,
@@ -14,20 +14,14 @@ const Image = posed.img({
   },
 });
 
-export default function Profile(props) {
-  const { images, description } = props;
+export default function Profile({
+  description,
+  images,
+  imageClick,
+  imageIndex,
+  showDescription,
+}) {
   const { age, name } = description;
-  const [showDescription, setShowDescription] = useState(false);
-  const [imageIndex, nextImage] = useState(0);
-
-  const handleClick = () => {
-    if (!showDescription) setShowDescription(true);
-    else {
-      let nextImageIndex = imageIndex + 1;
-      if (nextImageIndex >= images.length) nextImageIndex = 0;
-      nextImage(nextImageIndex);
-    }
-  };
 
   const userDescription = () => {
     const { text } = description;
@@ -36,14 +30,10 @@ export default function Profile(props) {
     );
   };
 
-  useEffect(() => {
-    setShowDescription(false);
-  }, [props]);
-
   return (
     <div style={{ ...profile.style }}>
       <button
-        onClick={() => handleClick()}
+        onClick={() => imageClick(showDescription, imageIndex, images.length)}
         style={{ ...profilePicture.style }}
         type="button"
       >
@@ -61,14 +51,20 @@ export default function Profile(props) {
 }
 
 Profile.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      alt: PropTypes.string.isRequired,
-      src: PropTypes.isRequired,
-    }),
-  ).isRequired,
   description: PropTypes.shape({
+    age: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
   }).isRequired,
+  images: PropTypes.arrayOf(PropTypes.shape({
+    alt: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  })).isRequired,
+  imageClick: PropTypes.func.isRequired,
+  imageIndex: PropTypes.number,
+  showDescription: PropTypes.bool.isRequired,
+};
+
+Profile.defaultProps = {
+  imageIndex: 0,
 };

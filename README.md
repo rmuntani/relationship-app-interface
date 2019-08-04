@@ -1,6 +1,8 @@
 # Relationship APP Interface
 
-This project is a relationship app interface clone implemented with React.
+This project is a relationship app interface clone implemented with React/Redux.
+
+Project is currently going through major refactoring to include Redux.
 
 ## Testing on your browser
 
@@ -12,6 +14,10 @@ To make the chat work, run script/node/websocket. Messages are broadcasted to al
 
 This project uses only inline style, and all the configurations are at app.config.js.
 Animations where implemented using Pose. Their specifications are inside the components.
+
+## About the application structure
+
+The React components in this project are divided in *presentational* componenents, called *components*, and *container* components, called *containers*, similar to what is done on Redux's docs. Tests are divided in *components* tests, where props and functions are tested and *container* tests, where a *container* with it's *component* is tested.
 
 ## Scripts
 
