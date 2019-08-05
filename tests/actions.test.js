@@ -1,12 +1,16 @@
 import {
-  changeCurrentImage, CHANGE_CURRENT_IMAGE, toggleDescription, TOGGLE_DESCRIPTION,
+  changeCurrentImage, toggleDescription,
+  failRequest, requestUsers, updateUsers,
+  changeCurrentUser,
+  closeMatch,
+  showMatch,
 } from '../src/actions';
 
 describe('changeCurrentImage', () => {
   const actionWithIndex = index => (
     {
       imageIndex: index,
-      type: CHANGE_CURRENT_IMAGE,
+      type: 'CHANGE_CURRENT_IMAGE',
     }
   );
 
@@ -31,9 +35,87 @@ describe('changeCurrentImage', () => {
 describe('toggleDescription', () => {
   it('should return the expected action', () => {
     const expectedAction = {
-      type: TOGGLE_DESCRIPTION,
+      type: 'TOGGLE_DESCRIPTION',
     };
     expect(toggleDescription()).toEqual(expectedAction);
   });
 });
 
+describe('failRequest', () => {
+  it('should return an action with error', () => {
+    const expectedAction = {
+      error: 'Network failed',
+      type: 'FAIL_REQUEST',
+    };
+    expect(failRequest('Network failed')).toEqual(expectedAction);
+  });
+});
+
+describe('requestUsers', () => {
+  it('should return an action informing that users where requested', () => {
+    const expectedAction = {
+      type: 'REQUEST_USERS',
+    };
+
+    expect(requestUsers()).toEqual(expectedAction);
+  });
+});
+
+describe('updateUsers', () => {
+  it('should return an action with the obtained data', () => {
+    const expectedAction = {
+      data: { user: 'yes' },
+      type: 'UPDATE_USERS',
+    };
+
+    expect(updateUsers({ user: 'yes' })).toEqual(expectedAction);
+  });
+});
+
+describe('changeCurrentUser', () => {
+  const actionWithIndex = index => (
+    {
+      userIndex: index,
+      type: 'CHANGE_CURRENT_USER',
+    }
+  );
+
+  it('should increment the index when it is smaller than the number of images', () => {
+    expect(changeCurrentUser(0, 10)).toEqual(actionWithIndex(1));
+    expect(changeCurrentUser(4, 100)).toEqual(actionWithIndex(5));
+    expect(changeCurrentUser(7, 10)).toEqual(actionWithIndex(8));
+  });
+
+  it('should change the index to 0 when it is equal to the number of images', () => {
+    expect(changeCurrentUser(0, 1)).toEqual(actionWithIndex(0));
+    expect(changeCurrentUser(99, 100)).toEqual(actionWithIndex(0));
+  });
+
+  it('should return 0 if image size is negative or 0', () => {
+    expect(changeCurrentUser(0, 0)).toEqual(actionWithIndex(0));
+    expect(changeCurrentUser(0, -1)).toEqual(actionWithIndex(0));
+    expect(changeCurrentUser(-1, -10)).toEqual(actionWithIndex(0));
+  });
+});
+
+describe('closeMatch', () => {
+  it('should return an action to close the match screen', () => {
+    const expectedAction = {
+      type: 'CLOSE_MATCH',
+    };
+
+    expect(closeMatch()).toEqual(expectedAction);
+  });
+});
+
+describe('showMatch', () => {
+  it('should return an action with the user that matched', () => {
+    const user = { name: 'Me' };
+    const expectedAction = {
+      user,
+      type: 'SHOW_MATCH',
+    };
+
+    expect(showMatch(user)).toEqual(expectedAction);
+  });
+});
