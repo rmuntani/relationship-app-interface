@@ -1,16 +1,7 @@
 import { connect } from 'react-redux';
 import { changeCurrentImage, toggleDescription } from '../actions';
 import ProfileComponent from '../components/Profile';
-
-const mapStateToProps = (state) => {
-  const { profileInteraction } = state;
-  const { imageIndex, showDescription } = profileInteraction;
-
-  return {
-    imageIndex,
-    showDescription,
-  };
-};
+import { mapStateToProfileProps } from '../selectors';
 
 const mapDispatchToProps = dispatch => (
   {
@@ -25,7 +16,7 @@ const mapDispatchToProps = dispatch => (
 );
 
 export const Profile = connect(
-  mapStateToProps,
+  mapStateToProfileProps,
   mapDispatchToProps,
 )(ProfileComponent);
 

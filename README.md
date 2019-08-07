@@ -17,7 +17,7 @@ Animations where implemented using Pose. Their specifications are inside the com
 
 ## About the application structure
 
-The React components in this project are divided in *presentational* componenents, called *components*, and *container* components, called *containers*, similar to what is done on Redux's docs. Tests are divided in *components* tests, where props and functions are tested and *container* tests, where a *container* with it's *component* is tested.
+The React components in this project are divided in *presentational* componenents, called *components*, and *container* components, called *containers*, similar to what is done on Redux's docs. Tests are divided in *components* tests, that are almost like unit-tests and are centered around testing props and functions, and *container* tests, where a *container* with it's *component* is tested.
 
 ## Scripts
 

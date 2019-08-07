@@ -43,7 +43,7 @@ describe('Profile', () => {
     },
   };
 
-  it('image click should toggle profile description', () => {
+  it('should toggle profile description with an image click', () => {
     const { container, getByText } = render(<ProfileWithStore />);
     const image = container.querySelector('img[src*=\'ms.jpg\']');
 
@@ -52,7 +52,7 @@ describe('Profile', () => {
     getByText('Rolling around at the speed of sound.');
   });
 
-  it('profile data change should hide description text', () => {
+  it('should hide description text when the profile changes', () => {
     const { container, queryByText, rerender } = render(<ProfileWithStore />);
     const image = container.querySelector('img[src*=\'ms.jpg\']');
 
@@ -63,7 +63,7 @@ describe('Profile', () => {
     throw (new Error('Images were not implemented'));
   });
 
-  it('further clicks should show other pictures, eventually looping to the first one', () => {
+  it('should show other pictures, eventually looping to the first one, when further clicks are done', () => {
     const extraImages = {
       images: [
         {
