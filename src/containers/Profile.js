@@ -7,7 +7,7 @@ const mapDispatchToProps = dispatch => (
   {
     imageClick: (showDescription, currIndex, numberOfImages) => {
       if (!showDescription) {
-        dispatch(toggleDescription());
+        dispatch(toggleDescription(true));
       } else {
         dispatch(changeCurrentImage(currIndex, numberOfImages));
       }

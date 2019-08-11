@@ -65,8 +65,9 @@ export function changeCurrentImage(currIndex, numberOfImages) {
   };
 }
 
-export function toggleDescription() {
+export function toggleDescription(showDescription) {
   return {
+    showDescription,
     type: TOGGLE_DESCRIPTION,
   };
 }

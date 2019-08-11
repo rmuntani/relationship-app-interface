@@ -33,11 +33,20 @@ describe('changeCurrentImage', () => {
 });
 
 describe('toggleDescription', () => {
-  it('should return the expected action', () => {
+  it('should return the expected action with a false', () => {
     const expectedAction = {
+      showDescription: false,
       type: 'TOGGLE_DESCRIPTION',
     };
-    expect(toggleDescription()).toEqual(expectedAction);
+    expect(toggleDescription(false)).toEqual(expectedAction);
+  });
+
+  it('should return the expected action with a true', () => {
+    const expectedAction = {
+      showDescription: true,
+      type: 'TOGGLE_DESCRIPTION',
+    };
+    expect(toggleDescription(true)).toEqual(expectedAction);
   });
 });
 

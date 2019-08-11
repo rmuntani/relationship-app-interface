@@ -24,14 +24,14 @@ function consultAPI(state = baseConsultAPI, action) {
       };
     case FAIL_REQUEST:
       return {
-        data: {},
+        data: [],
         error,
         success: false,
         userIndex: 0,
       };
     case REQUEST_USERS:
       return {
-        data: {},
+        data: [],
         error: null,
         success: null,
         userIndex: state.userIndex,
@@ -73,8 +73,7 @@ const baseProfileInteraction = {
 };
 
 function profileInteraction(state = baseProfileInteraction, action) {
-  const { imageIndex, type } = action;
-  const { showDescription } = state;
+  const { imageIndex, showDescription, type } = action;
 
   switch (type) {
     case CHANGE_CURRENT_IMAGE:
@@ -85,7 +84,7 @@ function profileInteraction(state = baseProfileInteraction, action) {
     case TOGGLE_DESCRIPTION:
       return {
         ...state,
-        showDescription: !showDescription,
+        showDescription,
       };
     default:
       return state;

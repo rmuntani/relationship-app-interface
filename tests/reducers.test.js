@@ -2,7 +2,7 @@ import { relationship } from '../src/reducers';
 
 describe('profileInteraction', () => {
   it('should toggle if text is shown or not', () => {
-    const action = { type: 'TOGGLE_DESCRIPTION' };
+    const action = { showDescription: false, type: 'TOGGLE_DESCRIPTION' };
 
     const initialState = {
       consultAPI: {},
@@ -23,7 +23,6 @@ describe('profileInteraction', () => {
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
-    expect(relationship(finalState, action)).toEqual(initialState);
   });
 
   it('should change image index when required', () => {
@@ -63,7 +62,7 @@ describe('consultAPI', () => {
 
     const initialState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -74,7 +73,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: 'Network failed',
         success: false,
         userIndex: 0,
@@ -94,7 +93,7 @@ describe('consultAPI', () => {
 
     const initialState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -135,7 +134,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -155,7 +154,7 @@ describe('consultAPI', () => {
 
     const initialState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: null,
         success: true,
         userIndex: 0,
@@ -166,7 +165,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: {},
+        data: [],
         error: null,
         success: true,
         userIndex: 1,
