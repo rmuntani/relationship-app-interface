@@ -1,16 +1,45 @@
-import axios from 'axios';
 import React from 'react';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import Match from '../../src/components/Match';
-import { request } from '../../src/configs/app.config';
 
-jest.mock('axios');
+/* Many ESLint rules are not useful for the mocks, and ignoring numerous specific rules
+  would make the file bloated */
+
+/* eslint-disable */
+jest.mock('../../src/components/Button', () => function ({ click, image }) {
+  return <img onClick={() => click()} alt={image.alt} />;
+});
+
+jest.mock('../../src/components/MatchModal', () => function ({ closeModal, user }) {
+  return <div onClick={closeModal}>{user.name}</div>;
+});
+
+jest.mock('../../src/containers/Profile', () => function () {
+  return <div />;
+});
+/* eslint-enable */
 
 describe('Match', () => {
   afterEach(cleanup);
 
-  const usersData = [
-    {
+  const props = {
+    closeModal: jest.fn(),
+    dislikeUser: jest.fn(),
+    error: 'It\'s wrong',
+    hideDescription: jest.fn(),
+    matchUser: {
+      age: 75,
+      name: 'Paulo Freire',
+      image: {
+        alt: 'Paulo, the educator',
+        src: 'paulo.jpg',
+      },
+    },
+    likeUser: jest.fn(),
+    openMatch: false,
+    requestUsers: jest.fn(),
+    success: true,
+    users: [{
       id: 1,
       images: [{
         src: 'ernesto.jpg',
@@ -33,165 +62,68 @@ describe('Match', () => {
         name: 'George Bush',
         text: 'Former US President',
       },
-    },
-    {
-      id: 3,
-      images: [{
-        src: 'descartes.jpg',
-        alt: 'Rene discarding some trash',
-      }],
-      description: {
-        age: 53,
-        name: 'Rene Descartes',
-        text: 'C\'est moi',
-      },
-    },
-  ];
-
-  const setUpMatchesTests = () => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    axios.post.mockResolvedValue({
-      data: {
-        success: true,
-        user: {
-          age: 75,
-          name: 'Paulo Freire',
-          image: {
-            src: 'paulo.jpg',
-          },
-        },
-      },
-      status: 200,
-    });
-
-    const { container, findByText, getByText } = render(<Match />);
-
-    return { container, findByText, getByText };
+    }],
+    userIndex: 0,
   };
 
-  it('should receive users data and show it', (done) => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    const { container, getByText } = render(<Match />);
+  const propsWithMatchModal = {
+    ...props,
+    openMatch: true,
+  };
 
-    setImmediate(() => {
-      const image = container.querySelector('img[src=\'ernesto.jpg\']');
-      expect(image.alt).toEqual('Ernesto at the beach');
-      getByText(/Ernesto Guevara/);
-      getByText(/39/);
-      done();
-    });
+  it('should call a function when component is first rendered', () => {
+    render(<Match {...propsWithMatchModal} />);
+
+    expect(props.requestUsers).toHaveBeenCalledTimes(1);
   });
 
-  it('should change users and make requests according to pressed buttons', (done) => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    axios.post.mockResolvedValue({ data: '', status: 200 });
+  it('should show a match modal when openMatch flag is set', () => {
+    // MatchModal used in this test is a mock
+    const { getByText } = render(<Match {...propsWithMatchModal} />);
 
-    const { container, getByText } = render(<Match />);
-
-    setImmediate(() => {
-      // First user
-      const likeButton = container.querySelector('img[alt=\'Like button\']');
-      const ernestoImage = container.querySelector('img[src=\'ernesto.jpg\']');
-
-      expect(ernestoImage.alt).toEqual('Ernesto at the beach');
-      getByText(/39/);
-
-      fireEvent.click(likeButton);
-
-      // Second user
-      const bushImage = container.querySelector('img[src=\'bush.jpg\']');
-      expect(bushImage.alt).toEqual('George grilling some meat');
-      getByText(/George Bush/);
-      getByText(/72/);
-      done();
-    });
+    getByText(/Paulo Freire/);
   });
 
-  it('should send a request to the right url depending on what button was clicked', (done) => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    axios.post.mockResolvedValue({ data: '', status: 200 });
-    const { container } = render(<Match />);
+  it('should call a Match component function when match modal is clicked', () => {
+    // MatchModal used in this test is a mock
+    const { getByText } = render(<Match {...propsWithMatchModal} />);
+    const clickable = getByText(/Paulo Freire/);
 
-    setImmediate(() => {
-      const likeButton = container.querySelector('img[alt=\'Like button\']');
-      const dislikeButton = container.querySelector('img[alt=\'Dislike button\']');
+    fireEvent.click(clickable);
 
-      fireEvent.click(likeButton);
-      fireEvent.click(dislikeButton);
-
-      expect(axios.post).toBeCalledWith(request.like, { id: 1 });
-      expect(axios.post).toBeCalledWith(request.dislike, { id: 2 });
-      done();
-    });
+    expect(propsWithMatchModal.closeModal).toHaveBeenCalledTimes(1);
   });
 
-  it('should show loading screen while request does not answer', (done) => {
-    axios.get.mockReturnValue(new Promise(() => { }));
-    const { getByText } = render(<Match />);
+  it('should show error when request failed', () => {
+    const propsWithError = {
+      ...props,
+      error: 'It\'s wrong',
+      success: false,
+    };
+    const { getByText } = render(<Match {...propsWithError} />);
 
-    setImmediate(() => {
-      getByText('Loading...');
-      done();
-    });
+    getByText(/It's wrong/);
   });
 
-  it('should show that network has problems if the first request failed', (done) => {
-    axios.get.mockReturnValue(Promise.reject(new Error('Network is bad!')));
+  it('should show that it is loading while the request has not ended', () => {
+    const propsWithLoading = {
+      ...props,
+      success: null,
+    };
+    const { getByText } = render(<Match {...propsWithLoading} />);
 
-    const { getByText } = render(<Match />);
-
-    setImmediate(() => {
-      getByText(/Network problems detected. Please try again latter./);
-      done();
-    });
+    getByText(/Loading\.\.\./);
   });
 
-  it('should show error when response status is not of the 200 family', (done) => {
-    axios.get.mockResolvedValue({ data: '', status: 500 });
+  it('should call like/dislike functions when buttons are clicked', () => {
+    const { getByAltText } = render(<Match {...props} />);
+    const likeButton = getByAltText(/Like button/);
+    const dislikeButton = getByAltText(/Dislike button/);
 
-    const { getByText } = render(<Match />);
+    fireEvent.click(likeButton);
+    fireEvent.click(dislikeButton);
 
-    setImmediate(() => {
-      getByText(/We're experimenting technical difficulties. Please try again latter./);
-      done();
-    });
-  });
-
-  it('should alert when user has a new match and vanish when clicked or on keyPress', (done) => {
-    const { container, findByText, getByText } = setUpMatchesTests();
-
-    setImmediate(() => {
-      const likeButton = container.querySelector('img[alt=\'Like button\']');
-
-      fireEvent.click(likeButton);
-
-      findByText(/It's a match!/).then((node) => {
-        getByText(/Paulo Freire/);
-        getByText(/75/);
-        fireEvent.click(node);
-        // After click the match screen, it should show the next user
-        getByText(/George Bush/);
-        done();
-      });
-    });
-  });
-
-  it('should alert when user has a new match and vanish when clicked or on keyPress', (done) => {
-    const { container, findByText, getByText } = setUpMatchesTests();
-
-    setImmediate(() => {
-      const likeButton = container.querySelector('img[alt=\'Like button\']');
-
-      fireEvent.click(likeButton);
-
-      findByText(/It's a match!/).then((node) => {
-        getByText(/Paulo Freire/);
-        getByText(/75/);
-        fireEvent.keyDown(node, { key: 'Enter', code: 13 });
-        // After click the match screen, it should show the next user
-        getByText(/George Bush/);
-        done();
-      });
-    });
+    expect(props.likeUser).toHaveBeenCalledTimes(1);
+    expect(props.dislikeUser).toHaveBeenCalledTimes(1);
   });
 });

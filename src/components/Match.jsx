@@ -1,16 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import Button from './Button';
-import Profile from './Profile';
+import Profile from '../containers/Profile';
 import {
   app, dislikeButton, likeButton, modal,
-  request, shade,
+  shade,
 } from '../configs/app.config';
-import LikeImage from './imgs/like.svg';
-import DislikeImage from './imgs/dislike.svg';
+import LikeImage from '../imgs/like.svg';
+import DislikeImage from '../imgs/dislike.svg';
 import MatchModal from './MatchModal';
-import { errors, loading } from '../configs/app.text';
+import { loading } from '../configs/app.text';
 
 const Modal = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -23,42 +23,20 @@ const Shade = posed.div({
   exit: { opacity: 0 },
 });
 
-export default function Match() {
-  const [changeBatch, updateChangeBatch] = useState(true);
-  const [users, changeUsers] = useState({});
-  const [isMatch, setMatch] = useState({ success: false, user: {} });
-  const [networkProblems, setNetworkProblems] = useState(false);
-  const [internalProblems, setInternalProblems] = useState(false);
-  const getUser = index => users.users[index];
-
-  const setNextUser = () => {
-    const nextUser = users.currentUser + 1;
-    changeUsers({ ...users, currentUser: nextUser });
-  };
-
-  const processMatch = (response) => {
-    const { success, user } = response.data;
-    if (success) {
-      setMatch({ success, user });
-    }
-  };
-
+export default function Match({
+  closeModal, dislikeUser,
+  error, hideDescription,
+  likeUser, matchUser,
+  openMatch, requestUsers,
+  success, users,
+  userIndex,
+}) {
   const dislike = () => {
-    axios
-      .post(request.dislike, { id: getUser(users.currentUser).id })
-      .then(response => processMatch(response));
-    setNextUser();
+    dislikeUser(users[userIndex].id, userIndex, users.length);
   };
 
   const like = () => {
-    axios
-      .post(request.like, { id: getUser(users.currentUser).id })
-      .then(response => processMatch(response));
-    setNextUser();
-  };
-
-  const removeMatch = () => {
-    setMatch({ success: false, user: {} });
+    likeUser(users[userIndex].id, userIndex, users.length);
   };
 
   const likeProperties = {
@@ -82,50 +60,33 @@ export default function Match() {
   };
 
   useEffect(() => {
-    axios.get(request.base)
-      .then(
-        (response) => {
-          if (response.status < 300) {
-            changeUsers({ users: response.data, currentUser: 0 });
-            updateChangeBatch(false);
-          } else {
-            setInternalProblems(true);
-          }
-        },
-      )
-      .catch(
-        () => {
-          setNetworkProblems(true);
-        },
-      );
+    requestUsers();
   }, []);
+
+  useEffect(() => {
+    hideDescription();
+  }, [userIndex]);
 
   const matchRoot = component => <div style={{ ...app.style }}>{component}</div>;
 
   const matchModal = () => ([
     <Modal key="modal" style={{ ...modal.style }}>
-      <MatchModal {...{ ...isMatch.user, click: removeMatch }} />
+      <MatchModal user={matchUser} closeModal={closeModal} />
     </Modal>,
     <Shade key="shade" style={{ ...shade.style }} />,
   ]
   );
 
-  if (internalProblems) {
+  if (success === null) {
+    return (matchRoot(<div>{loading}</div>));
+  }
+
+  if (!success) {
     return (
       matchRoot(
-        <div>
-          {errors.internal}
-        </div>,
+        <div>{error}</div>,
       )
     );
-  }
-
-  if (networkProblems) {
-    return (matchRoot(<div>{errors.network}.</div>));
-  }
-
-  if (changeBatch) {
-    return (matchRoot(<div>{loading}</div>));
   }
 
   return (
@@ -133,15 +94,9 @@ export default function Match() {
       {matchRoot(
         <React.Fragment>
           <PoseGroup>
-            {isMatch.success && matchModal()}
+            {openMatch && matchModal()}
           </PoseGroup>
-          <Profile {
-          ...{
-            images: getUser(users.currentUser).images,
-            description: getUser(users.currentUser).description,
-          }
-          }
-          />
+          <Profile />
           <Button {...dislikeProperties} />
           <Button {...likeProperties} />
         </React.Fragment>,
@@ -149,3 +104,43 @@ export default function Match() {
     </React.Fragment>
   );
 }
+
+Match.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  dislikeUser: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  hideDescription: PropTypes.func.isRequired,
+  matchUser: PropTypes.shape({
+    age: PropTypes.number,
+    name: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      alt: PropTypes.string,
+      src: PropTypes.string,
+    })),
+  }),
+  likeUser: PropTypes.func.isRequired,
+  openMatch: PropTypes.bool.isRequired,
+  requestUsers: PropTypes.func.isRequired,
+  success: PropTypes.bool,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      alt: PropTypes.string.isRequired,
+      src: PropTypes.string.isRequired,
+    })).isRequired,
+    description: PropTypes.shape({
+      age: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    }).isRequired,
+  })),
+  userIndex: PropTypes.number,
+};
+
+Match.defaultProps = {
+  error: '',
+  matchUser: {},
+  success: null,
+  users: [],
+  userIndex: 0,
+};

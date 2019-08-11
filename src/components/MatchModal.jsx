@@ -6,14 +6,16 @@ import {
 import { matchText } from '../configs/app.text';
 
 
-export default function MatchModal(props) {
+export default function MatchModal({
+  closeModal, user,
+}) {
   const {
-    age, click, name, image,
-  } = props;
+    age, name, image,
+  } = user;
   const alt = () => ((image.alt) ? image.alt : name);
 
   return (
-    <div onClick={() => click()} onKeyDown={() => click()} role="alert">
+    <div onClick={() => closeModal()} onKeyDown={() => closeModal()} role="alert">
       <h1>{matchText}</h1>
       <div style={{ ...profilePicture.style }}>
         <img
@@ -28,15 +30,17 @@ export default function MatchModal(props) {
 }
 
 MatchModal.propTypes = {
-  age: PropTypes.number.isRequired,
-  click: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.shape({
-    alt: PropTypes.string,
-    src: PropTypes.string.isRequired,
+  closeModal: PropTypes.func,
+  user: PropTypes.shape({
+    age: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.shape({
+      alt: PropTypes.string,
+      src: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
 };
 
 MatchModal.defaultProps = {
-  click: null,
+  closeModal: null,
 };
