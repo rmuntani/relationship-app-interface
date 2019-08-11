@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Default from './imgs/default.svg';
+import Default from '../imgs/default.svg';
 import {
   chatListUsername, chatPicture,
 } from '../configs/app.config';
