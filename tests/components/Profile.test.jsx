@@ -24,6 +24,15 @@ describe('Profile', () => {
     showDescription: false,
   };
 
+  it('should have a clickable image that will trigger all state changes', () => {
+    const { getByAltText } = render(<Profile {...props} />);
+    const image = getByAltText('Michael Schumacher');
+
+    fireEvent.click(image);
+
+    expect(props.imageClick).toHaveBeenCalledTimes(1);
+  });
+
   it('should show an image', () => {
     const { getByAltText } = render(<Profile {...props} />);
     const image = getByAltText('Michael Schumacher');
@@ -58,15 +67,5 @@ describe('Profile', () => {
 
     expect(image.src).toMatch(/mski.jpg/);
     expect(missingImage).toBe(null);
-  });
-
-  // State changes and it's logic are handled by Redux, and are tested on the container component
-  it('should have a clickable image that will trigger all state changes', () => {
-    const { getByAltText } = render(<Profile {...props} />);
-    const image = getByAltText('Michael Schumacher');
-
-    fireEvent.click(image);
-
-    expect(props.imageClick).toHaveBeenCalledTimes(1);
   });
 });

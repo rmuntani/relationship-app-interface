@@ -16,9 +16,9 @@ const Image = posed.img({
 
 export default function Profile({
   description,
-  images,
   imageClick,
   imageIndex,
+  images,
   showDescription,
 }) {
   const { age, name } = description;
@@ -56,12 +56,12 @@ Profile.propTypes = {
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
   }).isRequired,
+  imageClick: PropTypes.func.isRequired,
+  imageIndex: PropTypes.number,
   images: PropTypes.arrayOf(PropTypes.shape({
     alt: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
   })).isRequired,
-  imageClick: PropTypes.func.isRequired,
-  imageIndex: PropTypes.number,
   showDescription: PropTypes.bool.isRequired,
 };
 

@@ -8,59 +8,77 @@ import { Profile } from '../../src/containers/Profile';
 describe('Profile', () => {
   afterEach(cleanup);
 
-  const ProfileWithStore = (props = {}) => {
-    const store = createStore(relationship);
-    const extraProps = {
-      description: {
-        age: 50,
-        name: 'Michael Schumacher',
-        text: 'Rolling around at the speed of sound.',
+  const ProfileWithStore = (extraImages = {}) => {
+    const matchUser = {
+      age: 75,
+      name: 'Paulo Freire',
+      image: {
+        alt: 'Paulo, the educator',
+        src: 'paulo.jpg',
       },
-      images: [{
-        alt: 'Michael Schumacher',
-        src: 'ms.jpg',
-      },
-      {
-        alt: 'Michael skiing',
-        src: 'mski.jpg',
-      }],
-      ...props,
     };
+    const users = [{
+      id: 1,
+      images: [{
+        src: 'ernesto.jpg',
+        alt: 'Ernesto at the beach',
+      }],
+      description: {
+        age: 39,
+        name: 'Ernesto Guevara',
+        text: 'I\'m a warrior',
+      },
+    },
+    {
+      id: 2,
+      images: [{
+        src: 'bush.jpg',
+        alt: 'George grilling some meat',
+      }],
+      description: {
+        age: 72,
+        name: 'George Bush',
+        text: 'Former US President',
+      },
+      ...extraImages,
+    }];
+    const userIndex = 1;
+
+    const state = {
+      consultAPI: {
+        data: users,
+        error: 'It\'s an error',
+        success: true,
+        userIndex,
+      },
+      profileInteraction: {
+        imageIndex: 0,
+        showDescription: false,
+      },
+      match: {
+        open: false,
+        user: matchUser,
+      },
+    };
+
+    const store = createStore(relationship, state);
 
     return (
       <Provider store={store}>
-        <Profile {...extraProps} />
+        <Profile />
       </Provider>
     );
   };
 
-  const otherUser = {
-    images: [{ alt: 'Michael Jackson', src: 'mj.jpg' }],
-    description: {
-      age: 50,
-      name: 'Michael Jackson',
-      text: 'Who is bad (not me)',
-    },
-  };
-
   it('should toggle profile description with an image click', () => {
-    const { container, getByText } = render(<ProfileWithStore />);
-    const image = container.querySelector('img[src*=\'ms.jpg\']');
+    const { container, getByText, queryByText } = render(<ProfileWithStore />);
+    const image = container.querySelector('img[src*=\'bush.jpg\']');
+
+    expect(queryByText(/Former US President/)).toBe(null);
 
     fireEvent.click(image);
 
-    getByText('Rolling around at the speed of sound.');
-  });
-
-  it('should hide description text when the profile changes', () => {
-    const { container, queryByText, rerender } = render(<ProfileWithStore />);
-    const image = container.querySelector('img[src*=\'ms.jpg\']');
-
-    fireEvent.click(image);
-    rerender(<ProfileWithStore {...otherUser} />);
-
-    expect(queryByText(/Who is bad \(not me\)/)).toBe(null);
-    throw (new Error('Images were not implemented'));
+    getByText(/Former US President/);
   });
 
   it('should show other pictures, eventually looping to the first one, when further clicks are done', () => {
