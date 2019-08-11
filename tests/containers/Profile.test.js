@@ -4,64 +4,13 @@ import { createStore } from 'redux';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { relationship } from '../../src/reducers';
 import { Profile } from '../../src/containers/Profile';
+import { mockWithExtraImages } from '../mocks/baseStateMock';
 
 describe('Profile', () => {
   afterEach(cleanup);
 
   const ProfileWithStore = (extraImages = {}) => {
-    const matchUser = {
-      age: 75,
-      name: 'Paulo Freire',
-      image: {
-        alt: 'Paulo, the educator',
-        src: 'paulo.jpg',
-      },
-    };
-    const users = [{
-      id: 1,
-      images: [{
-        src: 'ernesto.jpg',
-        alt: 'Ernesto at the beach',
-      }],
-      description: {
-        age: 39,
-        name: 'Ernesto Guevara',
-        text: 'I\'m a warrior',
-      },
-    },
-    {
-      id: 2,
-      images: [{
-        src: 'bush.jpg',
-        alt: 'George grilling some meat',
-      }],
-      description: {
-        age: 72,
-        name: 'George Bush',
-        text: 'Former US President',
-      },
-      ...extraImages,
-    }];
-    const userIndex = 1;
-
-    const state = {
-      consultAPI: {
-        data: users,
-        error: 'It\'s an error',
-        success: true,
-        userIndex,
-      },
-      profileInteraction: {
-        imageIndex: 0,
-        showDescription: false,
-      },
-      match: {
-        open: false,
-        user: matchUser,
-      },
-    };
-
-    const store = createStore(relationship, state);
+    const store = createStore(relationship, mockWithExtraImages(extraImages));
 
     return (
       <Provider store={store}>
