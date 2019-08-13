@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
   likeUser: (id, currentUser, numberOfUsers) => dispatch(
     likeUser(id, currentUser, numberOfUsers),
   ),
-  requestUsers: () => dispatch(getRecomendations()),
+  requestSuggestions: () => dispatch(getRecomendations()),
 });
 
 export const Match = connect(

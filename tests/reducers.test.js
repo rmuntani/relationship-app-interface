@@ -57,12 +57,12 @@ describe('consultAPI', () => {
   it('should return a failed request', () => {
     const action = {
       error: 'Network failed',
-      type: 'FAIL_REQUEST',
+      type: 'FAIL_SUGGESTIONS',
     };
 
     const initialState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -73,7 +73,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: 'Network failed',
         success: false,
         userIndex: 0,
@@ -87,13 +87,13 @@ describe('consultAPI', () => {
 
   it('should return the request data', () => {
     const action = {
-      data: { user: 'yes' },
-      type: 'UPDATE_USERS',
+      suggestions: { user: 'yes' },
+      type: 'UPDATE_SUGGESTIONS',
     };
 
     const initialState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -104,7 +104,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: { user: 'yes' },
+        suggestions: { user: 'yes' },
         error: null,
         success: true,
         userIndex: 0,
@@ -118,7 +118,7 @@ describe('consultAPI', () => {
 
   it('should inform that request is being made', () => {
     const action = {
-      type: 'REQUEST_USERS',
+      type: 'REQUEST_SUGGESTIONS',
     };
 
     const initialState = {
@@ -134,7 +134,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: null,
         success: null,
         userIndex: 0,
@@ -148,13 +148,13 @@ describe('consultAPI', () => {
 
   it('should change to the next user', () => {
     const action = {
-      type: 'CHANGE_CURRENT_USER',
+      type: 'CHANGE_CURRENT_SUGGESTION',
       userIndex: 1,
     };
 
     const initialState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: null,
         success: true,
         userIndex: 0,
@@ -165,7 +165,7 @@ describe('consultAPI', () => {
 
     const finalState = {
       consultAPI: {
-        data: [],
+        suggestions: [],
         error: null,
         success: true,
         userIndex: 1,

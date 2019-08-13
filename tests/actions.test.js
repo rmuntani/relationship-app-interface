@@ -1,7 +1,7 @@
 import {
   changeCurrentImage, toggleDescription,
-  failRequest, requestUsers, updateUsers,
-  changeCurrentUser,
+  failSuggestions, requestSuggestions, updateSuggestions,
+  changeCurrentSuggestion,
   closeMatch,
   showMatch,
 } from '../src/actions';
@@ -50,60 +50,60 @@ describe('toggleDescription', () => {
   });
 });
 
-describe('failRequest', () => {
+describe('failSuggestions', () => {
   it('should return an action with error', () => {
     const expectedAction = {
       error: 'Network failed',
-      type: 'FAIL_REQUEST',
+      type: 'FAIL_SUGGESTIONS',
     };
-    expect(failRequest('Network failed')).toEqual(expectedAction);
+    expect(failSuggestions('Network failed')).toEqual(expectedAction);
   });
 });
 
-describe('requestUsers', () => {
+describe('requestSuggestions', () => {
   it('should return an action informing that users where requested', () => {
     const expectedAction = {
-      type: 'REQUEST_USERS',
+      type: 'REQUEST_SUGGESTIONS',
     };
 
-    expect(requestUsers()).toEqual(expectedAction);
+    expect(requestSuggestions()).toEqual(expectedAction);
   });
 });
 
-describe('updateUsers', () => {
+describe('updateSuggestions', () => {
   it('should return an action with the obtained data', () => {
     const expectedAction = {
-      data: { user: 'yes' },
-      type: 'UPDATE_USERS',
+      suggestions: { user: 'yes' },
+      type: 'UPDATE_SUGGESTIONS',
     };
 
-    expect(updateUsers({ user: 'yes' })).toEqual(expectedAction);
+    expect(updateSuggestions({ user: 'yes' })).toEqual(expectedAction);
   });
 });
 
-describe('changeCurrentUser', () => {
+describe('changeCurrentSuggestion', () => {
   const actionWithIndex = index => (
     {
       userIndex: index,
-      type: 'CHANGE_CURRENT_USER',
+      type: 'CHANGE_CURRENT_SUGGESTION',
     }
   );
 
   it('should increment the index when it is smaller than the number of images', () => {
-    expect(changeCurrentUser(0, 10)).toEqual(actionWithIndex(1));
-    expect(changeCurrentUser(4, 100)).toEqual(actionWithIndex(5));
-    expect(changeCurrentUser(7, 10)).toEqual(actionWithIndex(8));
+    expect(changeCurrentSuggestion(0, 10)).toEqual(actionWithIndex(1));
+    expect(changeCurrentSuggestion(4, 100)).toEqual(actionWithIndex(5));
+    expect(changeCurrentSuggestion(7, 10)).toEqual(actionWithIndex(8));
   });
 
   it('should change the index to 0 when it is equal to the number of images', () => {
-    expect(changeCurrentUser(0, 1)).toEqual(actionWithIndex(0));
-    expect(changeCurrentUser(99, 100)).toEqual(actionWithIndex(0));
+    expect(changeCurrentSuggestion(0, 1)).toEqual(actionWithIndex(0));
+    expect(changeCurrentSuggestion(99, 100)).toEqual(actionWithIndex(0));
   });
 
   it('should return 0 if image size is negative or 0', () => {
-    expect(changeCurrentUser(0, 0)).toEqual(actionWithIndex(0));
-    expect(changeCurrentUser(0, -1)).toEqual(actionWithIndex(0));
-    expect(changeCurrentUser(-1, -10)).toEqual(actionWithIndex(0));
+    expect(changeCurrentSuggestion(0, 0)).toEqual(actionWithIndex(0));
+    expect(changeCurrentSuggestion(0, -1)).toEqual(actionWithIndex(0));
+    expect(changeCurrentSuggestion(-1, -10)).toEqual(actionWithIndex(0));
   });
 });
 

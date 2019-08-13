@@ -27,7 +27,7 @@ export default function Match({
   closeModal, dislikeUser,
   error, hideDescription,
   likeUser, matchUser,
-  openMatch, requestUsers,
+  openMatch, requestSuggestions,
   success, users,
   userIndex,
 }) {
@@ -60,7 +60,7 @@ export default function Match({
   };
 
   useEffect(() => {
-    requestUsers();
+    requestSuggestions();
   }, []);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ Match.propTypes = {
   }),
   likeUser: PropTypes.func.isRequired,
   openMatch: PropTypes.bool.isRequired,
-  requestUsers: PropTypes.func.isRequired,
+  requestSuggestions: PropTypes.func.isRequired,
   success: PropTypes.bool,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,

@@ -8,7 +8,7 @@ import ChatItem from './ChatItem';
 import { errors, loading } from '../configs/app.text';
 
 export default function ChatSelection(props) {
-  const [users, updateUsers] = useState([]);
+  const [users, updateSuggestions] = useState([]);
   const [isDataLoaded, setDataLoaded] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
   const [networkFailed, setNetworkFailed] = useState(false);
@@ -19,7 +19,7 @@ export default function ChatSelection(props) {
       .get(request.matches(1))
       .then((response) => {
         if (response.status < 300) {
-          updateUsers(response.data);
+          updateSuggestions(response.data);
           setDataLoaded(true);
         } else {
           setLoadFailed(true);

@@ -4,10 +4,10 @@ import { getRecomendations, likeUser, dislikeUser } from '../src/requests';
 jest.mock('axios');
 
 describe('getRecommendation', () => {
-  it('should return a function that receives REQUEST_USERS action', () => {
+  it('should return a function that receives REQUEST_SUGGESTIONS action', () => {
     axios.get.mockReturnValue(new Promise(() => { }));
 
-    const action = { type: 'REQUEST_USERS' };
+    const action = { type: 'REQUEST_SUGGESTIONS' };
     const dispatch = jest.fn();
     const returnedDispatches = getRecomendations();
 
@@ -18,7 +18,7 @@ describe('getRecommendation', () => {
 
   it('should return an action with the api\'s data', () => {
     axios.get.mockResolvedValue({ data: { user: 'yes' }, status: 200 });
-    const action = { data: { user: 'yes' }, type: 'UPDATE_USERS' };
+    const action = { data: { user: 'yes' }, type: 'UPDATE_SUGGESTIONS' };
     const dispatch = jest.fn();
     const returnedDispatches = getRecomendations();
 
@@ -33,7 +33,7 @@ describe('getRecommendation', () => {
     axios.get.mockResolvedValue({ data: {}, status: 500 });
     const action = {
       error: 'We\'re experimenting technical difficulties. Please try again latter.',
-      type: 'FAIL_REQUEST',
+      type: 'FAIL_SUGGESTIONS',
     };
     const dispatch = jest.fn();
     const returnedDispatches = getRecomendations();
@@ -49,7 +49,7 @@ describe('getRecommendation', () => {
     axios.get.mockReturnValue(Promise.reject(new Error('Network is bad!')));
     const action = {
       error: 'Network problems detected. Please try again latter.',
-      type: 'FAIL_REQUEST',
+      type: 'FAIL_SUGGESTIONS',
     };
     const dispatch = jest.fn();
     const returnedDispatches = getRecomendations();
@@ -70,7 +70,7 @@ describe('postUser', () => {
     });
 
     const expectedAction = {
-      type: 'CHANGE_CURRENT_USER',
+      type: 'CHANGE_CURRENT_SUGGESTION',
       userIndex: 2,
     };
     const asyncDispatcher = postFunction(1, 1, 5);
@@ -112,7 +112,7 @@ describe('postUser', () => {
     const asyncDispatcher = postFunction(1, 1, 5);
     const dispatch = jest.fn();
     const expectedAction = {
-      type: 'CHANGE_CURRENT_USER',
+      type: 'CHANGE_CURRENT_SUGGESTION',
       userIndex: 2,
     };
 

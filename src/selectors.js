@@ -1,8 +1,8 @@
 export const mapStateToProfileProps = (state) => {
   const { profileInteraction, consultAPI } = state;
   const { imageIndex, showDescription } = profileInteraction;
-  const { data, userIndex } = consultAPI;
-  const { description, images } = data[userIndex];
+  const { suggestions, userIndex } = consultAPI;
+  const { description, images } = suggestions[userIndex];
 
   return {
     description,
@@ -15,7 +15,7 @@ export const mapStateToProfileProps = (state) => {
 export const mapStateToMatchProps = (state) => {
   const { consultAPI, match } = state;
   const {
-    error, success, data, userIndex,
+    error, success, suggestions, userIndex,
   } = consultAPI;
   const { open, user } = match;
 
@@ -24,7 +24,7 @@ export const mapStateToMatchProps = (state) => {
     matchUser: user,
     openMatch: open,
     success,
-    users: data,
+    users: suggestions,
     userIndex,
   };
 };

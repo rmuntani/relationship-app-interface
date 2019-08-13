@@ -37,7 +37,7 @@ describe('Match', () => {
     },
     likeUser: jest.fn(),
     openMatch: false,
-    requestUsers: jest.fn(),
+    requestSuggestions: jest.fn(),
     success: true,
     users: [{
       id: 1,
@@ -74,7 +74,7 @@ describe('Match', () => {
   it('should call a function when component is first rendered', () => {
     render(<Match {...propsWithMatchModal} />);
 
-    expect(props.requestUsers).toHaveBeenCalledTimes(1);
+    expect(props.requestSuggestions).toHaveBeenCalledTimes(1);
   });
 
   it('should show a match modal when openMatch flag is set', () => {

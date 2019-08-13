@@ -1,35 +1,35 @@
 import axios from 'axios';
 import {
-  failRequest, requestUsers, updateUsers,
-  showMatch, changeCurrentUser,
+  failSuggestions, requestSuggestions, updateSuggestions,
+  showMatch, changeCurrentSuggestion,
 } from './actions';
 import { request } from './configs/app.config';
 import { errors } from './configs/app.text';
 
 export function getRecomendations() {
   return function (dispatch) {
-    dispatch(requestUsers());
+    dispatch(requestSuggestions());
 
     axios
       .get(request.base)
       .then(
         (response) => {
           if (response.status < 300) {
-            dispatch(updateUsers(response.data));
+            dispatch(updateSuggestions(response.data));
           } else {
-            dispatch(failRequest(errors.internal));
+            dispatch(failSuggestions(errors.internal));
           }
         },
       )
       .catch(
-        () => { dispatch(failRequest(errors.network)); },
+        () => { dispatch(failSuggestions(errors.network)); },
       );
   };
 }
 
 function postUser(url, id, currentUser, numberOfUsers) {
   return function (dispatch) {
-    dispatch(changeCurrentUser(currentUser, numberOfUsers));
+    dispatch(changeCurrentSuggestion(currentUser, numberOfUsers));
 
     axios
       .post(url, { id })

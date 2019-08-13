@@ -34,7 +34,7 @@ const users = [{
 
 export const mockState = (consultAPI = {}, profileInteraction = {}, match = {}) => ({
   consultAPI: {
-    data: users,
+    suggestions: users,
     error: 'It\'s an error',
     success: true,
     userIndex: 1,
@@ -53,13 +53,13 @@ export const mockState = (consultAPI = {}, profileInteraction = {}, match = {}) 
 });
 
 export const mockWithExtraImages = (extraImages) => {
-  const userWithImages = { data: users.map(user => { return { ...user, ...extraImages } }) };
+  const userWithImages = { suggestions: users.map(user => { return { ...user, ...extraImages } }) };
   return mockState(userWithImages);
 };
 
 export const mockBeforeAPICall = () => {
   const consultAPI = {
-    data: [],
+    suggestions: [],
     error: '',
     success: null,
     userIndex: 0,

@@ -1,9 +1,9 @@
 /* Action types */
 
-export const FAIL_REQUEST = 'FAIL_REQUEST';
-export const REQUEST_USERS = 'REQUEST_USERS';
-export const UPDATE_USERS = 'UPDATE_USERS';
-export const CHANGE_CURRENT_USER = 'CHANGE_CURRENT_USER';
+export const FAIL_SUGGESTIONS = 'FAIL_SUGGESTIONS';
+export const REQUEST_SUGGESTIONS = 'REQUEST_SUGGESTIONS';
+export const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS';
+export const CHANGE_CURRENT_SUGGESTION = 'CHANGE_CURRENT_SUGGESTION';
 
 export const CLOSE_MATCH = 'CLOSE_MATCH';
 export const SHOW_MATCH = 'SHOW_MATCH';
@@ -14,31 +14,31 @@ export const TOGGLE_DESCRIPTION = 'TOGGLE_DESCRIPTION';
 /* Action creator */
 
 /* Users API */
-export function failRequest(error) {
+export function failSuggestions(error) {
   return {
     error,
-    type: FAIL_REQUEST,
+    type: FAIL_SUGGESTIONS,
   };
 }
 
-export function requestUsers() {
+export function requestSuggestions() {
   return {
-    type: REQUEST_USERS,
+    type: REQUEST_SUGGESTIONS,
   };
 }
 
-export function updateUsers(data) {
+export function updateSuggestions(suggestions) {
   return {
-    data,
-    type: UPDATE_USERS,
+    suggestions,
+    type: UPDATE_SUGGESTIONS,
   };
 }
 
-export function changeCurrentUser(currIndex, numberOfUsers) {
+export function changeCurrentSuggestion(currIndex, numberOfUsers) {
   const newIndex = (numberOfUsers > 0) ? (currIndex + 1) % numberOfUsers : 0;
   return {
     userIndex: newIndex,
-    type: CHANGE_CURRENT_USER,
+    type: CHANGE_CURRENT_SUGGESTION,
   };
 }
 

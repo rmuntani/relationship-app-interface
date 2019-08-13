@@ -38,7 +38,7 @@ const userIndex = 1;
 
 const state = {
   consultAPI: {
-    data: users,
+    suggestions: users,
     error: 'It\'s an error',
     success: true,
     userIndex,

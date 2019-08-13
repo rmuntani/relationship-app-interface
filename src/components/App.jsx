@@ -12,7 +12,7 @@ import relationship from '../reducers';
 export default function App() {
   const baseState = {
     consultAPI: {
-      data: [],
+      suggestions: [],
       error: '',
       success: null,
       userIndex: 0,
