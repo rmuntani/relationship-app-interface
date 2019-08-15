@@ -4,6 +4,10 @@ import {
   changeCurrentSuggestion,
   closeMatch,
   showMatch,
+  chatWithUser,
+  failMatchedUsersRequest,
+  requestMatchedUsers,
+  updateMatchedUsers,
 } from '../src/actions';
 
 describe('changeCurrentImage', () => {
@@ -126,5 +130,47 @@ describe('showMatch', () => {
     };
 
     expect(showMatch(user)).toEqual(expectedAction);
+  });
+});
+
+describe('chatWithUser', () => {
+  it('should return an action with the user id', () => {
+    const expectedAction = {
+      userId: 4,
+      type: 'CHAT_WITH_USER',
+    };
+
+    expect(chatWithUser(4)).toEqual(expectedAction);
+  });
+});
+
+describe('failMatchedUsersRequest', () => {
+  it('should return an action informing that the request failed ', () => {
+    const expectedAction = {
+      type: 'FAIL_MATCHED_USERS_REQUEST',
+    };
+
+    expect(failMatchedUsersRequest()).toEqual(expectedAction);
+  });
+});
+
+describe('requestMatchedUsers', () => {
+  it('should return that a request is under way', () => {
+    const expectedAction = {
+      type: 'REQUEST_MATCHED_USERS',
+    };
+
+    expect(requestMatchedUsers()).toEqual(expectedAction);
+  });
+});
+
+describe('updateMatchedUsers', () => {
+  it('should return the matched users', () => {
+    const expectedAction = {
+      matchedUsers: { users: [] },
+      type: 'UPDATE_MATCHED_USERS',
+    };
+
+    expect(updateMatchedUsers({ users: [] })).toEqual(expectedAction);
   });
 });

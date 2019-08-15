@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 import {
   CHANGE_CURRENT_IMAGE, CHANGE_CURRENT_SUGGESTION, FAIL_SUGGESTIONS,
-  REQUEST_SUGGESTIONS, TOGGLE_DESCRIPTION, UPDATE_SUGGESTIONS, CLOSE_MATCH, SHOW_MATCH,
+  REQUEST_SUGGESTIONS, TOGGLE_DESCRIPTION, UPDATE_SUGGESTIONS, CLOSE_MATCH,
+  SHOW_MATCH, CHAT_WITH_USER, FAIL_MATCHED_USERS_REQUEST,
+  REQUEST_MATCHED_USERS, UPDATE_MATCHED_USERS,
 } from './actions';
 
 const baseConsultAPI = {
@@ -91,6 +93,52 @@ function profileInteraction(state = baseProfileInteraction, action) {
   }
 }
 
-export const relationship = combineReducers({ consultAPI, match, profileInteraction });
+const baseChat = {
+  error: '',
+  matchedUsers: [],
+  success: null,
+  userId: null,
+};
+
+function chat(state = baseChat, action) {
+  const {
+    error, matchedUsers, userId, type,
+  } = action;
+
+  switch (type) {
+    case CHAT_WITH_USER:
+      return {
+        ...state,
+        userId,
+      };
+    case FAIL_MATCHED_USERS_REQUEST:
+      return {
+        ...state,
+        error,
+        matchedUsers: [],
+        success: false,
+      };
+    case REQUEST_MATCHED_USERS:
+      return {
+        ...state,
+        error: '',
+        matchedUsers: [],
+        success: null,
+      };
+    case UPDATE_MATCHED_USERS:
+      return {
+        ...state,
+        error: '',
+        matchedUsers,
+        success: true,
+      };
+    default:
+      return state;
+  }
+}
+
+export const relationship = combineReducers({
+  consultAPI, match, profileInteraction, chat,
+});
 
 export default relationship;

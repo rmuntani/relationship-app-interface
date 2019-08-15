@@ -11,6 +11,7 @@ describe('profileInteraction', () => {
         imageIndex: 0,
         showDescription: true,
       },
+      chat: {},
     };
 
     const finalState = {
@@ -20,6 +21,7 @@ describe('profileInteraction', () => {
         imageIndex: 0,
         showDescription: false,
       },
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -38,6 +40,7 @@ describe('profileInteraction', () => {
         imageIndex: 0,
         showDescription: true,
       },
+      chat: {},
     };
 
     const finalState = {
@@ -47,6 +50,7 @@ describe('profileInteraction', () => {
         imageIndex: 1,
         showDescription: true,
       },
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -69,6 +73,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -80,6 +85,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -100,6 +106,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -111,6 +118,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -130,6 +138,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -141,6 +150,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -161,6 +171,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -172,6 +183,7 @@ describe('consultAPI', () => {
       },
       match: {},
       profileInteraction: {},
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -193,6 +205,7 @@ describe('match', () => {
         },
       },
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -202,6 +215,7 @@ describe('match', () => {
         user: {},
       },
       profileInteraction: {},
+      chat: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -222,6 +236,7 @@ describe('match', () => {
         user: {},
       },
       profileInteraction: {},
+      chat: {},
     };
 
     const finalState = {
@@ -233,6 +248,140 @@ describe('match', () => {
         },
       },
       profileInteraction: {},
+      chat: {},
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+});
+
+describe('chat', () => {
+  it('should change user id only', () => {
+    const action = {
+      type: 'CHAT_WITH_USER',
+      userId: 4,
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [{ user: 1 }],
+        success: true,
+        userId: null,
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [{ user: 1 }],
+        success: true,
+        userId: 4,
+      },
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+
+  it('should change indicate that a request failed, without changing userId', () => {
+    const action = {
+      error: 'A big mistake',
+      type: 'FAIL_MATCHED_USERS_REQUEST',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [],
+        success: true,
+        userId: 3,
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: 'A big mistake',
+        matchedUsers: [],
+        success: false,
+        userId: 3,
+      },
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+
+  it('should nullify all chat variables but userId when a new request is made', () => {
+    const action = {
+      type: 'REQUEST_MATCHED_USERS',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [{ user: 1 }, { user: 2 }],
+        success: true,
+        userId: 4,
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [],
+        success: null,
+        userId: 4,
+      },
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+
+  it('should update matched users', () => {
+    const action = {
+      matchedUsers: [{ user: 1 }, { user: 2 }],
+      type: 'UPDATE_MATCHED_USERS',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [],
+        success: null,
+        userId: 4,
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {
+        error: '',
+        matchedUsers: [{ user: 1 }, { user: 2 }],
+        success: true,
+        userId: 4,
+      },
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);

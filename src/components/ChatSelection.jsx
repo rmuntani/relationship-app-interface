@@ -1,55 +1,28 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  app, chatList, chatListItem, request,
+  app, chatList, chatListItem,
 } from '../configs/app.config';
 import ChatItem from './ChatItem';
-import { errors, loading } from '../configs/app.text';
+import { loading } from '../configs/app.text';
 
-export default function ChatSelection(props) {
-  const [users, updateSuggestions] = useState([]);
-  const [isDataLoaded, setDataLoaded] = useState(false);
-  const [loadFailed, setLoadFailed] = useState(false);
-  const [networkFailed, setNetworkFailed] = useState(false);
-  const { onItemClick } = props;
-
-  useEffect(() => {
-    axios
-      .get(request.matches(1))
-      .then((response) => {
-        if (response.status < 300) {
-          updateSuggestions(response.data);
-          setDataLoaded(true);
-        } else {
-          setLoadFailed(true);
-        }
-      })
-      .catch(() => {
-        setNetworkFailed(true);
-      });
-  }, []);
-
-  if (networkFailed) {
-    return (
-      <div style={{ ...app.style }}>
-        {errors.network}
-      </div>
-    );
-  }
-
-  if (loadFailed) {
-    return (
-      <div style={{ ...app.style }}>
-        {errors.internal}
-      </div>
-    );
-  }
-
-  if (!isDataLoaded) {
+export default function ChatSelection({
+  error,
+  selectUser, success,
+  users,
+}) {
+  if (success === null) {
     return (
       <div style={{ ...app.style }}>
         {loading}
+      </div>
+    );
+  }
+
+  if (!success) {
+    return (
+      <div style={{ ...app.style }}>
+        {error}
       </div>
     );
   }
@@ -61,7 +34,7 @@ export default function ChatSelection(props) {
         users.map(user => (
           <li
             key={user.id}
-            onClick={() => onItemClick(user)}
+            onClick={() => selectUser(user.id)}
             style={{ ...chatListItem.style }}
           >
             <ChatItem user={user} />
@@ -74,9 +47,16 @@ export default function ChatSelection(props) {
 }
 
 ChatSelection.propTypes = {
-  onItemClick: PropTypes.func,
+  error: PropTypes.string.isRequired,
+  selectUser: PropTypes.func.isRequired,
+  success: PropTypes.bool.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  })),
 };
 
 ChatSelection.defaultProps = {
   onItemClick: null,
+  users: [],
 };

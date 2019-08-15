@@ -1,11 +1,13 @@
 import axios from 'axios';
 import {
   failSuggestions, requestSuggestions, updateSuggestions,
-  showMatch, changeCurrentSuggestion,
+  showMatch, changeCurrentSuggestion, requestMatchedUsers,
+  updateMatchedUsers, failMatchedUsersRequest,
 } from './actions';
 import { request } from './configs/app.config';
 import { errors } from './configs/app.text';
 
+// Match
 export function getRecomendations() {
   return function (dispatch) {
     dispatch(requestSuggestions());
@@ -50,4 +52,24 @@ export function dislikeUser(id, currentUser, numberOfUsers) {
 
 export function likeUser(id, currentUser, numberOfUsers) {
   return postUser(request.like, id, currentUser, numberOfUsers);
+}
+
+// Chat
+export function getMatchedUsers() {
+  return function (dispatch) {
+    dispatch(requestMatchedUsers());
+
+    axios
+      .get(request.matches(1))
+      .then((response) => {
+        if (response.status < 300) {
+          dispatch(updateMatchedUsers(response.data));
+        } else {
+          dispatch(failMatchedUsersRequest(errors.internal));
+        }
+      })
+      .catch(() => {
+        dispatch(failMatchedUsersRequest(errors.network));
+      });
+  };
 }

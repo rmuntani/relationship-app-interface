@@ -1,14 +1,23 @@
-import axios from 'axios';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import ChatSelection from '../../src/components/ChatSelection';
 
-jest.mock('axios');
+/* eslint-disable */
+jest.mock('../../src/components/ChatItem', () => function ({ user }) {
+  return <div>{user.name}</div>;
+});
+/* eslint-enable */
 
 describe('ChatSelection', () => {
   afterEach(cleanup);
 
-  const usersData = [
+  const baseProps = {
+    error: '',
+    selectUser: jest.fn(),
+    success: null,
+    users: [],
+  };
+  const users = [
     {
       id: 1,
       age: 75,
@@ -46,49 +55,45 @@ describe('ChatSelection', () => {
       },
     },
   ];
+  const propsWithUser = {
+    ...baseProps,
+    error: '',
+    users,
+    success: true,
+  };
 
-  it('should have users listed with their pictures, name and age', (done) => {
-    axios.get.mockResolvedValue({ data: usersData, status: 200 });
-    const { getByAltText, getByText } = render(<ChatSelection />);
+  it('should show a loading screen while request was not successful', () => {
+    const { getByText } = render(<ChatSelection {...baseProps} />);
 
-    setImmediate(() => {
-      getByText(/Paulo Freire/);
-      getByText(/75/);
-      getByAltText(/It's me, Paulo/);
-
-      getByText(/Ernesto Guevara/);
-      getByText(/39/);
-      getByAltText(/Ernesto at the beach/);
-
-      getByText(/George Bush/);
-      getByText(/72/);
-      getByAltText(/George grilling some meat/);
-
-      getByText(/Rene Descartes/);
-      getByText(/53/);
-      getByAltText(/Rene discarding some trash/);
-      done();
-    });
+    getByText('Loading...');
   });
 
-  it('should show when server response is not ok', (done) => {
-    axios.get.mockResolvedValue({ data: null, status: 500 });
-    const { getByText } = render(<ChatSelection />);
+  it('should show an error when request was nos successful', () => {
+    const propsWithError = {
+      ...baseProps,
+      error: 'It\'s raw!',
+      success: false,
+    };
+    const { getByText } = render(<ChatSelection {...propsWithError} />);
 
-    setImmediate(() => {
-      getByText(/We're experimenting technical difficulties. Please try again latter./);
-      done();
-    });
+    getByText(/It's raw!/);
   });
 
-  it('should show that network has problems if the first request failed', (done) => {
-    axios.get.mockReturnValue(Promise.reject(new Error('Network is bad!')));
+  it('should render users when the request was successful', () => {
+    const { getByText } = render(<ChatSelection {...propsWithUser} />);
 
-    const { getByText } = render(<ChatSelection />);
+    getByText(/Paulo Freire/);
+    getByText(/Ernesto Guevara/);
+    getByText(/George Bush/);
+    getByText(/Rene Descartes/);
+  });
 
-    setImmediate(() => {
-      getByText(/Network problems detected. Please try again latter./);
-      done();
-    });
+  it('should trigger a function when an username is clicked', () => {
+    const { getByText } = render(<ChatSelection {...propsWithUser} />);
+    const name = getByText(/Paulo Freire/);
+
+    fireEvent.click(name);
+
+    expect(propsWithUser.selectUser).toHaveBeenCalledWith(users[0]);
   });
 });

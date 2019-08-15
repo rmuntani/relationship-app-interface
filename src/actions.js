@@ -1,15 +1,24 @@
 /* Action types */
 
+/* Users actions */
 export const FAIL_SUGGESTIONS = 'FAIL_SUGGESTIONS';
 export const REQUEST_SUGGESTIONS = 'REQUEST_SUGGESTIONS';
 export const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS';
 export const CHANGE_CURRENT_SUGGESTION = 'CHANGE_CURRENT_SUGGESTION';
 
+/* Match pop-up actions */
 export const CLOSE_MATCH = 'CLOSE_MATCH';
 export const SHOW_MATCH = 'SHOW_MATCH';
 
+/* Profile description interaction */
 export const CHANGE_CURRENT_IMAGE = 'CHANGE_CURRENT_IMAGE';
 export const TOGGLE_DESCRIPTION = 'TOGGLE_DESCRIPTION';
+
+/* Chat with user screen */
+export const FAIL_MATCHED_USERS_REQUEST = 'FAIL_MATCHED_USERS_REQUEST';
+export const CHAT_WITH_USER = 'CHAT_WITH_USER';
+export const REQUEST_MATCHED_USERS = 'REQUEST_MATCHED_USERS';
+export const UPDATE_MATCHED_USERS = 'UPDATE_MATCHED_USERS';
 
 /* Action creator */
 
@@ -69,5 +78,34 @@ export function toggleDescription(showDescription) {
   return {
     showDescription,
     type: TOGGLE_DESCRIPTION,
+  };
+}
+
+/* Request matched users */
+export function failMatchedUsersRequest(error) {
+  return {
+    error,
+    type: FAIL_MATCHED_USERS_REQUEST,
+  };
+}
+
+export function requestMatchedUsers() {
+  return {
+    type: REQUEST_MATCHED_USERS,
+  };
+}
+
+export function updateMatchedUsers(matchedUsers) {
+  return {
+    matchedUsers,
+    type: UPDATE_MATCHED_USERS,
+  };
+}
+
+/* Chat with user screen */
+export function chatWithUser(userId) {
+  return {
+    userId,
+    type: CHAT_WITH_USER,
   };
 }
