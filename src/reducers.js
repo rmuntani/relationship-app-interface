@@ -3,7 +3,7 @@ import {
   CHANGE_CURRENT_IMAGE, CHANGE_CURRENT_SUGGESTION, FAIL_SUGGESTIONS,
   REQUEST_SUGGESTIONS, TOGGLE_DESCRIPTION, UPDATE_SUGGESTIONS, CLOSE_MATCH,
   SHOW_MATCH, CHAT_WITH_USER, FAIL_MATCHED_USERS_REQUEST,
-  REQUEST_MATCHED_USERS, UPDATE_MATCHED_USERS,
+  REQUEST_MATCHED_USERS, UPDATE_MATCHED_USERS, UPDATE_MESSAGES,
 } from './actions';
 
 const baseConsultAPI = {
@@ -137,8 +137,27 @@ function chat(state = baseChat, action) {
   }
 }
 
+const baseMessages = {};
+
+export function messages(state = baseMessages, action) {
+  const { id, message, type } = action;
+  const newMessagesTree = { ...state };
+
+  switch (type) {
+    case UPDATE_MESSAGES:
+      if (newMessagesTree[id] === undefined) {
+        newMessagesTree[id] = [message];
+      } else {
+        newMessagesTree[id].push(message);
+      }
+      return newMessagesTree;
+    default:
+      return state;
+  }
+}
+
 export const relationship = combineReducers({
-  consultAPI, match, profileInteraction, chat,
+  consultAPI, match, profileInteraction, chat, messages,
 });
 
 export default relationship;

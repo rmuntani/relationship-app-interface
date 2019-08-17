@@ -20,6 +20,9 @@ export const CHAT_WITH_USER = 'CHAT_WITH_USER';
 export const REQUEST_MATCHED_USERS = 'REQUEST_MATCHED_USERS';
 export const UPDATE_MATCHED_USERS = 'UPDATE_MATCHED_USERS';
 
+/* Messaging another user screen */
+export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
+
 /* Action creator */
 
 /* Users API */
@@ -107,5 +110,14 @@ export function chatWithUser(userIndex) {
   return {
     userIndex,
     type: CHAT_WITH_USER,
+  };
+}
+
+/* Messaging another user screen */
+export function updateMessages(id, message) {
+  return {
+    id,
+    message,
+    type: UPDATE_MESSAGES,
   };
 }

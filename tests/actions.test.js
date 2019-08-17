@@ -8,6 +8,7 @@ import {
   failMatchedUsersRequest,
   requestMatchedUsers,
   updateMatchedUsers,
+  updateMessages,
 } from '../src/actions';
 
 describe('changeCurrentImage', () => {
@@ -172,5 +173,17 @@ describe('updateMatchedUsers', () => {
     };
 
     expect(updateMatchedUsers({ users: [] })).toEqual(expectedAction);
+  });
+});
+
+describe('updateMessages', () => {
+  it('should return an action with the new message', () => {
+    const expectedAction = {
+      id: 2,
+      message: 'Hello my friend',
+      type: 'UPDATE_MESSAGES',
+    };
+
+    expect(updateMessages(2, 'Hello my friend')).toEqual(expectedAction);
   });
 });

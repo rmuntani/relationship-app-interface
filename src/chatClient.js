@@ -1,4 +1,5 @@
 import { webSocketConfig } from './configs/app.config';
+import { updateMessages } from './actions';
 
 let connection = null;
 let connectionPromise = null;
@@ -49,4 +50,21 @@ export function sendMessageToUser(message, id) {
 // For testing purposes only
 export function closeConnection() {
   connection.close();
+}
+
+export function sendMessageToUserWithDispatch(id, message) {
+  return function (dispatch) {
+    if (!connectionOpen) {
+      initializeConnection();
+    }
+
+    connectionPromise
+      .then(() => {
+        dispatch(updateMessages(id, message));
+        connection.send(JSON.stringify({ text: message, id }));
+      })
+      .catch(() => {
+        connectionOpen = false;
+      });
+  };
 }

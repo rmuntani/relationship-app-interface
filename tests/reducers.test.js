@@ -12,6 +12,7 @@ describe('profileInteraction', () => {
         showDescription: true,
       },
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -22,6 +23,7 @@ describe('profileInteraction', () => {
         showDescription: false,
       },
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -41,6 +43,7 @@ describe('profileInteraction', () => {
         showDescription: true,
       },
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -51,6 +54,7 @@ describe('profileInteraction', () => {
         showDescription: true,
       },
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -74,6 +78,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -86,6 +91,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -107,6 +113,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -119,6 +126,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -139,6 +147,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -151,6 +160,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -172,6 +182,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -184,6 +195,7 @@ describe('consultAPI', () => {
       match: {},
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -206,6 +218,7 @@ describe('match', () => {
       },
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -216,6 +229,7 @@ describe('match', () => {
       },
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -237,6 +251,7 @@ describe('match', () => {
       },
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     const finalState = {
@@ -249,6 +264,7 @@ describe('match', () => {
       },
       profileInteraction: {},
       chat: {},
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -272,6 +288,7 @@ describe('chat', () => {
         success: true,
         userIndex: null,
       },
+      messages: {},
     };
 
     const finalState = {
@@ -284,6 +301,7 @@ describe('chat', () => {
         success: true,
         userIndex: 4,
       },
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -305,6 +323,7 @@ describe('chat', () => {
         success: true,
         userIndex: 3,
       },
+      messages: {},
     };
 
     const finalState = {
@@ -317,6 +336,7 @@ describe('chat', () => {
         success: false,
         userIndex: 3,
       },
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -337,6 +357,7 @@ describe('chat', () => {
         success: true,
         userIndex: 4,
       },
+      messages: {},
     };
 
     const finalState = {
@@ -349,6 +370,7 @@ describe('chat', () => {
         success: null,
         userIndex: 4,
       },
+      messages: {},
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
@@ -370,6 +392,7 @@ describe('chat', () => {
         success: null,
         userIndex: 4,
       },
+      messages: {},
     };
 
     const finalState = {
@@ -381,6 +404,113 @@ describe('chat', () => {
         matchedUsers: [{ user: 1 }, { user: 2 }],
         success: true,
         userIndex: 4,
+      },
+      messages: {},
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+});
+
+describe('messages', () => {
+  it('should create a new entry when it doesn\'t exists', () => {
+    const action = {
+      id: 4,
+      message: { id: 4, message: 'Hello there' },
+      type: 'UPDATE_MESSAGES',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {},
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {
+        4: [
+          { id: 4, message: 'Hello there' },
+        ],
+      },
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+
+  it('should insert a message in an existing entry and preserve ordering', () => {
+    const action = {
+      id: 4,
+      message: { id: -1, message: 'What is up?' },
+      type: 'UPDATE_MESSAGES',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {
+        4: [
+          { id: 4, message: 'Hello there' },
+        ],
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {
+        4: [
+          { id: 4, message: 'Hello there' },
+          { id: -1, message: 'What is up?' },
+        ],
+      },
+    };
+
+    expect(relationship(initialState, action)).toEqual(finalState);
+  });
+
+  it('should insert a new entry and preserve old entries', () => {
+    const action = {
+      id: 5,
+      message: { id: 5, message: 'Whoobadooba' },
+      type: 'UPDATE_MESSAGES',
+    };
+
+    const initialState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {
+        4: [
+          { id: 4, message: 'Hello there' },
+          { id: -1, message: 'What is up?' },
+        ],
+      },
+    };
+
+    const finalState = {
+      consultAPI: {},
+      match: {},
+      profileInteraction: {},
+      chat: {},
+      messages: {
+        4: [
+          { id: 4, message: 'Hello there' },
+          { id: -1, message: 'What is up?' },
+        ],
+        5: [
+          { id: 5, message: 'Whoobadooba' },
+        ],
       },
     };
 

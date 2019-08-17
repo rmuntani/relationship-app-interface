@@ -5,30 +5,32 @@ import {
 } from '../configs/app.config';
 import ChatItem from './ChatItem';
 import Message from './Message';
-import { sendMessageToUser, chatConnection } from '../chatClient';
+import { chatConnection } from '../chatClient';
 
-export default function ChatScreen(props) {
+export default function ChatScreen({
+  messages, receiveMessage,
+  sendMessageToUser, user,
+}) {
   const {
     age, id, image, name,
-  } = props;
+  } = user;
   const [message, updateMessage] = useState('');
-  const [messageHistory, updateMessageHistory] = useState([]);
-  const [lastReceivedMessage, updateReceivedMessage] = useState({});
 
   const handleChange = (event) => {
     updateMessage(event.target.value);
   };
 
+  const emptyMessage = () => updateMessage('');
+
   const sendMessage = () => {
-    const sentMessage = { user: CURRENT_USER, text: message };
-    sendMessageToUser(message, id);
-    updateMessage('');
-    updateMessageHistory([...messageHistory, sentMessage]);
+    const sentMessage = { id: CURRENT_USER, message };
+    sendMessageToUser(id, sentMessage);
+    emptyMessage();
   };
 
   const onMessage = (newMessage) => {
     const receivedMessage = JSON.parse(newMessage.data);
-    updateReceivedMessage(receivedMessage);
+    receiveMessage(receivedMessage.id, receivedMessage);
   };
 
   useEffect(() => {
@@ -39,22 +41,13 @@ export default function ChatScreen(props) {
     chatConnection(handleEvents);
   }, []);
 
-  const isReceivedMessageValid = validateMessage => validateMessage.id !== undefined
-           && validateMessage.text !== undefined;
-
-  useEffect(() => {
-    if (isReceivedMessageValid(lastReceivedMessage)) {
-      updateMessageHistory([...messageHistory, lastReceivedMessage]);
-    }
-  }, [lastReceivedMessage]);
-
   return (
     <div style={{ ...app.style }}>
       <div style={{ ...chatListItem.style }}>
         <ChatItem user={{ age, image, name }} />
       </div>
       <div style={{ ...messageScreen.style }}>
-        <Message messages={messageHistory} />
+        <Message messages={messages} />
         <div style={{ ...messageScreenInputs.style }}>
           <input
             onChange={event => handleChange(event)}
@@ -76,8 +69,22 @@ export default function ChatScreen(props) {
 }
 
 ChatScreen.propTypes = {
-  age: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
-  image: PropTypes.shape({ alt: PropTypes.string, src: PropTypes.isRequired }).isRequired,
-  name: PropTypes.string.isRequired,
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      message: PropTypes.string.isRequired,
+    }),
+  ),
+  receiveMessage: PropTypes.func.isRequired,
+  sendMessageToUser: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    age: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    image: PropTypes.shape({ alt: PropTypes.string, src: PropTypes.isRequired }).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+ChatScreen.defaultProps = {
+  messages: [],
 };
