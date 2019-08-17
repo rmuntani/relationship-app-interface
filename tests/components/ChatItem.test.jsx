@@ -5,7 +5,7 @@ import ChatItem from '../../src/components/ChatItem';
 describe('ChatItem', () => {
   afterEach(cleanup);
 
-  it('should render a default image if original image is not available', (done) => {
+  it('should render user basic description with it a default picture', (done) => {
     const lackingImage = {
       id: 1,
       age: 75,

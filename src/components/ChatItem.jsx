@@ -5,9 +5,7 @@ import {
   chatListUsername, chatPicture,
 } from '../configs/app.config';
 
-export default function ChatItem(props) {
-  const { user } = props;
-
+export default function ChatItem({ user }) {
   /* eslint-disable no-param-reassign */
   const handleError = (event) => {
     event.target.onerror = null;
