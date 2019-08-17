@@ -103,9 +103,9 @@ export function updateMatchedUsers(matchedUsers) {
 }
 
 /* Chat with user screen */
-export function chatWithUser(userId) {
+export function chatWithUser(userIndex) {
   return {
-    userId,
+    userIndex,
     type: CHAT_WITH_USER,
   };
 }

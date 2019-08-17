@@ -39,3 +39,12 @@ export const mapStateToChatSelectionProps = (state) => {
     users: matchedUsers,
   };
 };
+
+export const mapStateToChatProps = (state) => {
+  const { chat } = state;
+  const { userIndex } = chat;
+
+  return {
+    chatWith: userIndex,
+  };
+};

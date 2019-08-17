@@ -85,7 +85,7 @@ export const mockBeforeMatchedUsersAPICall = () => {
     matchedUsers: [],
     error: '',
     success: null,
-    userId: null,
+    userIndex: null,
   };
 
   return mockState({}, {}, {}, chat);

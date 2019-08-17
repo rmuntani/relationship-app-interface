@@ -1,4 +1,6 @@
-import { mapStateToProfileProps, mapStateToMatchProps, mapStateToChatSelectionProps } from '../src/selectors';
+import {
+  mapStateToProfileProps, mapStateToMatchProps, mapStateToChatSelectionProps, mapStateToChatProps,
+} from '../src/selectors';
 
 const users = [{
   id: 1,
@@ -55,7 +57,7 @@ const state = {
     error: 'Wrong...',
     matchedUsers: [{ user: 1 }, { user: 2 }],
     success: true,
-    userId: 4,
+    userIndex: 4,
   },
 };
 
@@ -91,4 +93,12 @@ it('should use mapStateToChatSelectionProps successfully', () => {
   };
 
   expect(mapStateToChatSelectionProps(state)).toEqual(chatSelectionProps);
+});
+
+it('should use mapStateToChatProps successfully', () => {
+  const chatProps = {
+    chatWith: 4,
+  };
+
+  expect(mapStateToChatProps(state)).toEqual(chatProps);
 });

@@ -259,7 +259,7 @@ describe('chat', () => {
   it('should change user id only', () => {
     const action = {
       type: 'CHAT_WITH_USER',
-      userId: 4,
+      userIndex: 4,
     };
 
     const initialState = {
@@ -270,7 +270,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [{ user: 1 }],
         success: true,
-        userId: null,
+        userIndex: null,
       },
     };
 
@@ -282,14 +282,14 @@ describe('chat', () => {
         error: '',
         matchedUsers: [{ user: 1 }],
         success: true,
-        userId: 4,
+        userIndex: 4,
       },
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
   });
 
-  it('should change indicate that a request failed, without changing userId', () => {
+  it('should change indicate that a request failed, without changing userIndex', () => {
     const action = {
       error: 'A big mistake',
       type: 'FAIL_MATCHED_USERS_REQUEST',
@@ -303,7 +303,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [],
         success: true,
-        userId: 3,
+        userIndex: 3,
       },
     };
 
@@ -315,14 +315,14 @@ describe('chat', () => {
         error: 'A big mistake',
         matchedUsers: [],
         success: false,
-        userId: 3,
+        userIndex: 3,
       },
     };
 
     expect(relationship(initialState, action)).toEqual(finalState);
   });
 
-  it('should nullify all chat variables but userId when a new request is made', () => {
+  it('should nullify all chat variables but userIndex when a new request is made', () => {
     const action = {
       type: 'REQUEST_MATCHED_USERS',
     };
@@ -335,7 +335,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [{ user: 1 }, { user: 2 }],
         success: true,
-        userId: 4,
+        userIndex: 4,
       },
     };
 
@@ -347,7 +347,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [],
         success: null,
-        userId: 4,
+        userIndex: 4,
       },
     };
 
@@ -368,7 +368,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [],
         success: null,
-        userId: 4,
+        userIndex: 4,
       },
     };
 
@@ -380,7 +380,7 @@ describe('chat', () => {
         error: '',
         matchedUsers: [{ user: 1 }, { user: 2 }],
         success: true,
-        userId: 4,
+        userIndex: 4,
       },
     };
 

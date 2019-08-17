@@ -6,7 +6,7 @@ import { getMatchedUsers } from '../requests';
 
 const mapDispatchToProps = dispatch => ({
   requestMatchedUsers: () => dispatch(getMatchedUsers()),
-  selectUser: userId => dispatch(chatWithUser(userId)),
+  selectUser: userIndex => dispatch(chatWithUser(userIndex)),
 });
 
 export const ChatSelection = connect(

@@ -97,19 +97,19 @@ const baseChat = {
   error: '',
   matchedUsers: [],
   success: null,
-  userId: null,
+  userIndex: null,
 };
 
 function chat(state = baseChat, action) {
   const {
-    error, matchedUsers, userId, type,
+    error, matchedUsers, userIndex, type,
   } = action;
 
   switch (type) {
     case CHAT_WITH_USER:
       return {
         ...state,
-        userId,
+        userIndex,
       };
     case FAIL_MATCHED_USERS_REQUEST:
       return {

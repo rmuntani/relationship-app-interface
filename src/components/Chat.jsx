@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
-import ChatSelection from './ChatSelection';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ChatSelection from '../containers/ChatSelection';
 import ChatScreen from './ChatScreen';
 
-export default function Chat() {
-  const [chatWith, setChatWith] = useState({ user: null });
-
-  const openUserChat = (user) => {
-    setChatWith(user);
-  };
-
-  if (chatWith.user !== null) {
+export default function Chat({ chatWith }) {
+  if (chatWith !== null) {
     return (<ChatScreen {...chatWith} />);
   }
 
-  return (<ChatSelection onItemClick={openUserChat} />);
+  return (<ChatSelection />);
 }
+
+Chat.propTypes = {
+  chatWith: PropTypes.number,
+};
+
+Chat.defaultProps = {
+  chatWith: null,
+};

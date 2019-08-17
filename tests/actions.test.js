@@ -136,7 +136,7 @@ describe('showMatch', () => {
 describe('chatWithUser', () => {
   it('should return an action with the user id', () => {
     const expectedAction = {
-      userId: 4,
+      userIndex: 4,
       type: 'CHAT_WITH_USER',
     };
 
