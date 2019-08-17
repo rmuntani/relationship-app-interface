@@ -13,6 +13,7 @@ describe('ChatSelection', () => {
 
   const baseProps = {
     error: '',
+    requestMatchedUsers: jest.fn(),
     selectUser: jest.fn(),
     success: null,
     users: [],
@@ -62,6 +63,12 @@ describe('ChatSelection', () => {
     success: true,
   };
 
+  it('should call the request function when component is loaded', () => {
+    render(<ChatSelection {...baseProps} />);
+
+    expect(baseProps.requestMatchedUsers).toHaveBeenCalled();
+  });
+
   it('should show a loading screen while request was not successful', () => {
     const { getByText } = render(<ChatSelection {...baseProps} />);
 
@@ -94,6 +101,6 @@ describe('ChatSelection', () => {
 
     fireEvent.click(name);
 
-    expect(propsWithUser.selectUser).toHaveBeenCalledWith(users[0]);
+    expect(propsWithUser.selectUser).toHaveBeenCalledWith(users[0].id);
   });
 });

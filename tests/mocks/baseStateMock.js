@@ -32,7 +32,12 @@ const users = [{
   },
 }];
 
-export const mockState = (consultAPI = {}, profileInteraction = {}, match = {}) => ({
+export const mockState = (
+  consultAPI = {},
+  profileInteraction = {},
+  match = {},
+  chat = {},
+) => ({
   consultAPI: {
     suggestions: users,
     error: 'It\'s an error',
@@ -50,14 +55,21 @@ export const mockState = (consultAPI = {}, profileInteraction = {}, match = {}) 
     user: matchUser,
     ...match,
   },
+  chat: {
+    error: '',
+    matchedUsers: [],
+    success: null,
+    userIndex: null,
+    ...chat,
+  },
 });
 
 export const mockWithExtraImages = (extraImages) => {
-  const userWithImages = { suggestions: users.map(user => { return { ...user, ...extraImages } }) };
+  const userWithImages = { suggestions: users.map(user => ({ ...user, ...extraImages })) };
   return mockState(userWithImages);
 };
 
-export const mockBeforeAPICall = () => {
+export const mockBeforeSuggestionsAPICall = () => {
   const consultAPI = {
     suggestions: [],
     error: '',
@@ -66,4 +78,15 @@ export const mockBeforeAPICall = () => {
   };
 
   return mockState(consultAPI);
-}
+};
+
+export const mockBeforeMatchedUsersAPICall = () => {
+  const chat = {
+    matchedUsers: [],
+    error: '',
+    success: null,
+    userId: null,
+  };
+
+  return mockState({}, {}, {}, chat);
+};

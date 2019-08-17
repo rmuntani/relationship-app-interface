@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   app, chatList, chatListItem,
@@ -7,10 +7,14 @@ import ChatItem from './ChatItem';
 import { loading } from '../configs/app.text';
 
 export default function ChatSelection({
-  error,
+  error, requestMatchedUsers,
   selectUser, success,
   users,
 }) {
+  useEffect(() => {
+    requestMatchedUsers();
+  }, []);
+
   if (success === null) {
     return (
       <div style={{ ...app.style }}>
@@ -48,8 +52,9 @@ export default function ChatSelection({
 
 ChatSelection.propTypes = {
   error: PropTypes.string.isRequired,
+  requestMatchedUsers: PropTypes.func.isRequired,
   selectUser: PropTypes.func.isRequired,
-  success: PropTypes.bool.isRequired,
+  success: PropTypes.bool,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
@@ -58,5 +63,6 @@ ChatSelection.propTypes = {
 
 ChatSelection.defaultProps = {
   onItemClick: null,
+  success: null,
   users: [],
 };

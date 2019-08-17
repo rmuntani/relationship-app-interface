@@ -2,12 +2,12 @@ import axios from 'axios';
 import React from 'react';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk';
 import { cleanup, render, fireEvent } from '@testing-library/react';
 import Match from '../../src/containers/Match';
 import { request } from '../../src/configs/app.config';
 import relationship from '../../src/reducers';
-import { mockBeforeAPICall } from '../mocks/baseStateMock';
+import { mockBeforeSuggestionsAPICall } from '../mocks/baseStateMock';
 
 jest.mock('axios');
 
@@ -15,7 +15,11 @@ describe('Match', () => {
   afterEach(() => cleanup());
 
   const MatchWithStore = () => {
-    const store = createStore(relationship, mockBeforeAPICall(), applyMiddleware(thunkMiddleware));
+    const store = createStore(
+      relationship,
+      mockBeforeSuggestionsAPICall(),
+      applyMiddleware(thunkMiddleware),
+    );
 
     return (
       <Provider store={store}>
@@ -240,7 +244,7 @@ describe('Match', () => {
     });
   });
 
-   it('should show another user when userIndex changes', (done) => {
+  it('should show another user when userIndex changes', (done) => {
     axios.get.mockResolvedValue({ data: usersData, status: 200 });
     axios.post.mockResolvedValue({ data: { success: false }, status: 200 });
 
@@ -272,7 +276,7 @@ describe('Match', () => {
       const like = getByAltText(/Like button/);
 
       fireEvent.click(image);
-      getByText(/I\'m a warrior/);
+      getByText(/I'm a warrior/);
 
       fireEvent.click(like);
 

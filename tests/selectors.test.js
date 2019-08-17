@@ -1,4 +1,4 @@
-import { mapStateToProfileProps, mapStateToMatchProps } from '../src/selectors';
+import { mapStateToProfileProps, mapStateToMatchProps, mapStateToChatSelectionProps } from '../src/selectors';
 
 const users = [{
   id: 1,
@@ -51,6 +51,12 @@ const state = {
     open: true,
     user: matchUser,
   },
+  chat: {
+    error: 'Wrong...',
+    matchedUsers: [{ user: 1 }, { user: 2 }],
+    success: true,
+    userId: 4,
+  },
 };
 
 it('should use mapStateToProfileProps successfully', () => {
@@ -64,7 +70,7 @@ it('should use mapStateToProfileProps successfully', () => {
   expect(mapStateToProfileProps(state)).toEqual(profileProps);
 });
 
-it('should use mapStateToMatchProsp successfully', () => {
+it('should use mapStateToMatchProps successfully', () => {
   const matchProps = {
     error: 'It\'s an error',
     matchUser,
@@ -75,4 +81,14 @@ it('should use mapStateToMatchProsp successfully', () => {
   };
 
   expect(mapStateToMatchProps(state)).toEqual(matchProps);
+});
+
+it('should use mapStateToChatSelectionProps successfully', () => {
+  const chatSelectionProps = {
+    error: 'Wrong...',
+    users: [{ user: 1 }, { user: 2 }],
+    success: true,
+  };
+
+  expect(mapStateToChatSelectionProps(state)).toEqual(chatSelectionProps);
 });
