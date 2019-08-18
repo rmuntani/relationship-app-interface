@@ -37,6 +37,7 @@ export const mockState = (
   profileInteraction = {},
   match = {},
   chat = {},
+  messages = {},
 ) => ({
   consultAPI: {
     suggestions: users,
@@ -61,6 +62,9 @@ export const mockState = (
     success: null,
     userIndex: null,
     ...chat,
+  },
+  messages: {
+    ...messages,
   },
 });
 
@@ -90,3 +94,11 @@ export const mockBeforeMatchedUsersAPICall = () => {
 
   return mockState({}, {}, {}, chat);
 };
+
+export const mockWithMessages = (messages, userIndex) => mockState(
+  {}, {}, {}, { userIndex }, messages,
+);
+
+export const mockWithMatchedUser = (matchUsers, userIndex) => mockState(
+  {}, {}, {}, { userIndex, matchedUsers: matchUsers }, {},
+);

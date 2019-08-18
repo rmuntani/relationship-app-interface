@@ -1,5 +1,8 @@
 import {
-  mapStateToProfileProps, mapStateToMatchProps, mapStateToChatSelectionProps, mapStateToChatProps,
+  mapStateToProfileProps, mapStateToMatchProps,
+  mapStateToChatSelectionProps,
+  mapStateToChatProps,
+  mapStateToChatScreenProps,
 } from '../src/selectors';
 
 const users = [{
@@ -55,9 +58,21 @@ const state = {
   },
   chat: {
     error: 'Wrong...',
-    matchedUsers: [{ user: 1 }, { user: 2 }],
+    matchedUsers: [
+      { id: 4, name: 'Robert Smith' },
+      { id: 3, name: 'Bart Simpson' },
+    ],
     success: true,
     userIndex: 4,
+  },
+  messages: {
+    4: [
+      { id: 4, message: 'Hello!' },
+      { id: -1, message: '?' },
+    ],
+    5: [
+      { id: 5, message: 'YOU AGAIN?' },
+    ],
   },
 };
 
@@ -88,7 +103,10 @@ it('should use mapStateToMatchProps successfully', () => {
 it('should use mapStateToChatSelectionProps successfully', () => {
   const chatSelectionProps = {
     error: 'Wrong...',
-    users: [{ user: 1 }, { user: 2 }],
+    users: [
+      { id: 4, name: 'Robert Smith' },
+      { id: 3, name: 'Bart Simpson' },
+    ],
     success: true,
   };
 
@@ -101,4 +119,16 @@ it('should use mapStateToChatProps successfully', () => {
   };
 
   expect(mapStateToChatProps(state)).toEqual(chatProps);
+});
+
+it('should use mapStateToChatScreenProps successfully', () => {
+  const chatScreenProps = {
+    messages: [
+      { id: 4, message: 'Hello!' },
+      { id: -1, message: '?' },
+    ],
+    user: { id: 4, name: 'Robert Smith' },
+  };
+
+  expect(mapStateToChatScreenProps(state)).toEqual(chatScreenProps);
 });

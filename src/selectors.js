@@ -48,3 +48,14 @@ export const mapStateToChatProps = (state) => {
     chatWith: userIndex,
   };
 };
+
+export const mapStateToChatScreenProps = (state) => {
+  const { chat, messages } = state;
+  const { matchedUsers, userIndex } = chat;
+  const currentUser = matchedUsers.filter(user => user.id === userIndex)[0];
+
+  return {
+    messages: messages[userIndex],
+    user: currentUser,
+  };
+};

@@ -11,7 +11,7 @@ export default function Message(props) {
     <ul style={{ ...messageList.style }}>
       {messages.map((message, index) => {
         let messageStyle;
-        if (message.user === CURRENT_USER) {
+        if (message.id === CURRENT_USER) {
           messageStyle = currentUserMessage.style;
         } else {
           messageStyle = otherUserMessage.style;
@@ -22,7 +22,7 @@ export default function Message(props) {
             key={index}
             style={messageStyle}
           >
-            {message.text}
+            {message.message}
           </li>
         );
       })}
