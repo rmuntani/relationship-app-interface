@@ -4,7 +4,7 @@ import Chat from '../../src/components/Chat';
 
 jest.mock('axios');
 
-jest.mock('../../src/components/ChatScreen', () => function () {
+jest.mock('../../src/containers/ChatScreen', () => function () {
   return (
     <div>Chat screen</div>
   );
