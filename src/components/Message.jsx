@@ -4,9 +4,7 @@ import {
   CURRENT_USER, otherUserMessage, currentUserMessage, messageList,
 } from '../configs/app.config';
 
-export default function Message(props) {
-  const { messages } = props;
-
+export default function Message({ messages }) {
   return (
     <ul style={{ ...messageList.style }}>
       {messages.map((message, index) => {
