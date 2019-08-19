@@ -47,7 +47,7 @@ describe('ChatScreen with WebSocket', () => {
     });
   });
 
-  it('should store sent messages and received messages', (done) => {
+  it('should store sent messages', (done) => {
     const {
       container, findByText,
     } = render(<ChatScreenWithStore />);
@@ -60,5 +60,30 @@ describe('ChatScreen with WebSocket', () => {
     findByText(/Hello!/).then(() => {
       done();
     });
+  });
+
+  it('should store sent messages and received messages', (done) => {
+    const {
+      container, debug, findByText, getByText,
+    } = render(<ChatScreenWithStore />);
+    const inputMessage = container.querySelector('input[type=\'text\']');
+    const send = container.querySelector('button');
+
+    fireEvent.change(inputMessage, { target: { value: 'Hello!' } });
+    fireEvent.click(send);
+
+    server.send('{ "id": 1, "message": "Hello my dear!"}');
+    server.send('{ "id": 1, "message": "Let\'s eat!"}');
+
+    findByText(/Hello!/)
+      .then(() => {
+        getByText(/Hello my dear!/);
+        getByText(/Let's eat!/);
+        done();
+      })
+      .catch(() => {
+        debug();
+        throw (new Error('Sent message could not be found'));
+      });
   });
 });

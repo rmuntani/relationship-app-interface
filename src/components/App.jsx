@@ -2,9 +2,9 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk';
 import { navigationBar, navigationButton } from '../configs/app.config';
-import Chat from './Chat';
+import Chat from '../containers/Chat';
 import Match from '../containers/Match';
 import { app } from '../configs/app.text';
 import relationship from '../reducers';
@@ -25,6 +25,13 @@ export default function App() {
       open: false,
       user: {},
     },
+    chat: {
+      error: '',
+      matchedUsers: [],
+      success: null,
+      userIndex: null,
+    },
+    messages: {},
   };
   const store = createStore(relationship, baseState, applyMiddleware(thunkMiddleware));
 

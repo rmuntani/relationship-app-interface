@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import ChatComponent from '../components/Chat';
 import { mapStateToChatProps } from '../selectors';
 
-export const Profile = connect(
+export const Chat = connect(
   mapStateToChatProps,
   null,
 )(ChatComponent);
 
-export default Profile;
+export default Chat;

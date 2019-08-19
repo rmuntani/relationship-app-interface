@@ -22,6 +22,7 @@ wsServer.on('request', function(request) {
   // This is the most important callback for us, we'll handle
   // all messages from users here.
   connection.on('message', function(message) {
+    console.log(message);
     connections.forEach((newConnection) => {
       if (connection !== newConnection) {
         newConnection.send(message.utf8Data);

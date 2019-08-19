@@ -2,13 +2,13 @@
 
 This project is a relationship app interface clone implemented with React/Redux.
 
-Project is currently going through major refactoring to include Redux.
-
 ## Testing on your browser
 
 After cloning the project on your machine, installing Docker and running script/setup, run script/node/build to generate a webpack'd js file and its other resources in server/public. Then, run script/server and access `localhost:4567/index.html`.
 
 To make the chat work, run script/node/websocket. Messages are broadcasted to all clients connected to the server.
+
+Images are not available from the get go. server/public/pictures should be populated for the app to show profiles' pictures.
 
 ## About style/animations
 

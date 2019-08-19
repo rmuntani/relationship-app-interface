@@ -60,8 +60,13 @@ export function sendMessageToUserWithDispatch(id, message) {
 
     connectionPromise
       .then(() => {
+        const messageText = message.message;
+        const messageToWebSocket = {
+          id,
+          message: messageText,
+        };
         dispatch(updateMessages(id, message));
-        connection.send(JSON.stringify({ text: message, id }));
+        connection.send(JSON.stringify(messageToWebSocket));
       })
       .catch(() => {
         connectionOpen = false;

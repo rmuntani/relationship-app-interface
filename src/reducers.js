@@ -141,16 +141,25 @@ const baseMessages = {};
 
 export function messages(state = baseMessages, action) {
   const { id, message, type } = action;
-  const newMessagesTree = { ...state };
+  let newState;
 
   switch (type) {
     case UPDATE_MESSAGES:
-      if (newMessagesTree[id] === undefined) {
-        newMessagesTree[id] = [message];
+      if (state[id] === undefined) {
+        newState = {
+          ...state,
+          [id]: [message],
+        };
       } else {
-        newMessagesTree[id].push(message);
+        newState = {
+          ...state,
+          [id]: [
+            ...state[id],
+            message,
+          ],
+        };
       }
-      return newMessagesTree;
+      return newState;
     default:
       return state;
   }

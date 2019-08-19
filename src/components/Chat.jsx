@@ -5,7 +5,7 @@ import ChatScreen from '../containers/ChatScreen';
 
 export default function Chat({ chatWith }) {
   if (chatWith !== null) {
-    return (<ChatScreen {...chatWith} />);
+    return (<ChatScreen />);
   }
 
   return (<ChatSelection />);
