@@ -151,7 +151,9 @@ export const messageInput = {
 
 export const messageList = {
   style: {
+    height: '370px',
     listStyle: 'none',
+    overflow: 'scroll',
     padding: '0px',
   },
 };
@@ -159,14 +161,18 @@ export const messageList = {
 export const messageScreen = {
   style: {
     height: '450px',
-    position: 'relative',
   },
 };
 
+export const messagesHeight = {
+  style: {
+    height: '370px'
+  }
+}
+
 export const messageScreenInputs = {
   style: {
-    bottom: '30px',
-    position: 'absolute',
+    bottom: '40px',
     width: '300px',
   },
 };

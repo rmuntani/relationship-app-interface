@@ -8,6 +8,7 @@ import Chat from '../containers/Chat';
 import Match from '../containers/Match';
 import { app } from '../configs/app.text';
 import relationship from '../reducers';
+import { chatWithUser } from '../actions';
 
 export default function App() {
   const baseState = {
@@ -35,6 +36,10 @@ export default function App() {
   };
   const store = createStore(relationship, baseState, applyMiddleware(thunkMiddleware));
 
+  const resetChat = () => {
+    store.dispatch(chatWithUser(null));
+  };
+
   return (
     <BrowserRouter>
       <Provider store={store}>
@@ -44,6 +49,7 @@ export default function App() {
         <div style={{ ...navigationBar.style }}>
           <Link to="/match">
             <button
+              onClick={resetChat}
               style={{ ...navigationButton.style }}
               type="button"
             >
@@ -52,6 +58,7 @@ export default function App() {
           </Link>
           <Link to="/chat">
             <button
+              onClick={resetChat}
               style={{ ...navigationButton.style }}
               type="button"
             >
